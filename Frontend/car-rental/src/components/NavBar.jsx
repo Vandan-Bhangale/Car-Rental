@@ -3,7 +3,7 @@ import logo from '../assets/logo.webp';
 
 const NavBar = () => {
     return (
-        <nav className="bg-white shadow-lg rounded-b-xl px-8 py-4 flex items-center justify-between">
+        <nav className="bg-white shadow-lg rounded-b-xl px-6 py-2 flex items-center justify-between">
             <Link to="/" className="flex items-center gap-3">
                 <img src={logo} alt="CarRental Logo" className="h-12 w-12 rounded-full" />
                 <span className="font-bold text-2xl font-serif text-gray-600 tracking-wide">CarRental</span>
