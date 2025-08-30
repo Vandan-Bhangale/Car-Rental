@@ -16,13 +16,51 @@ exports.postLogin =async (req,res) => {
             return res.status(401).json({message: "Invalid credentials"});
         }
 
-        if(existingUser) {
-            return res.status(200).json({message: "Login successful"});
-        }
+        //Store user in session
+        req.session.user = {
+            id: existingUser._id,
+            email: existingUser.email
+        };
+
+        req.session.isLoggedIn = true;
+
+        req.session.save((error) => {
+            if(error) {
+                console.log("Error while storing the session: ",error);
+                res.status(500).json({message: "Session save error"});
+            }
+            return res.status(200)
+            .json({
+                message: "Login successful",
+                user: {
+                    id: existingUser._id.toString(),
+                    email: existingUser.email,
+                }
+            })
+        })
     } catch (error) {
         console.error("Error while logging in:", error);
         return res.status(500).json({message: "Internal server error"});
     }
+}
+
+exports.getStatus = (req, res) => {
+    const user = req.session.user;
+    if(user) {
+        res.status(200).json({isLoggedIn: true, user: user});
+    } else {
+        res.status(200).json({isLoggedIn: false});
+    }
+}
+
+exports.postLogout = (req, res) => {
+    req.session.destroy((error) => {
+        if (error) {
+            console.error("Error while logging out:", error);
+            return res.status(500).json({ message: "Internal server error" });
+        }
+        res.status(200).json({ message: "Logout successful" });
+    });
 }
 
 exports.postSignup = async (req, res) => {
