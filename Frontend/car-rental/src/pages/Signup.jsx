@@ -27,7 +27,7 @@ const Signup = () => {
         console.log("Signup Successful");
         toast.success("Signup Successful");
         resetForm();
-        navigate("/Login");
+        navigate("/login");
       }
     } catch (error) {
       console.error("Signup error:", error);

@@ -3,24 +3,37 @@ import * as Yup from "yup";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import Cookies from "js-cookie";
 
 const Login = () => {
   const navigate = useNavigate();
 
   // Yup validation schema
   const LoginSchema = Yup.object({
-    email: Yup.string().email("Invalid email format").required("Email is required"),
-    password: Yup.string().min(6, "Password must be at least 6 characters").required("Password is required"),
+    email: Yup.string()
+      .email("Invalid email format")
+      .required("Email is required"),
+    password: Yup.string()
+      .min(6, "Password must be at least 6 characters")
+      .required("Password is required"),
   });
 
-  const handleSubmit = async (values, { setSubmitting }) => {     //setSubmitting is formik inbuilt function
+  const handleSubmit = async (values, { setSubmitting }) => {
+    //setSubmitting is formik inbuilt function
     try {
-      const response = await axios.post("http://localhost:3001/api/login", values);
+      const response = await axios.post(
+        "http://localhost:3001/api/login",
+        values,
+        { withCredentials: true }
+      );
 
       if (response.data.message === "Login successful") {
         console.log("Login Successful");
         toast.success("Login Successful");
-        navigate("/home");
+        // const isLoggedIn = Cookies.get("isLoggedIn"); 
+        // console.log("Is Logged In:", isLoggedIn);
+        navigate("/");
+        window.location.reload();
       }
     } catch (error) {
       console.log("Error while login", error);
