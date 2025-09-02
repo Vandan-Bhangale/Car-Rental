@@ -28,10 +28,8 @@ const Login = () => {
       );
 
       if (response.data.message === "Login successful") {
-        console.log("Login Successful");
         toast.success("Login Successful");
-        // const isLoggedIn = Cookies.get("isLoggedIn"); 
-        // console.log("Is Logged In:", isLoggedIn);
+        localStorage.setItem("user", JSON.stringify(response.data.user));
         navigate("/");
         window.location.reload();
       }

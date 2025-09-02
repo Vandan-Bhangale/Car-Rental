@@ -1,6 +1,7 @@
 import carImage from "../assets/car_image1.png";
+import { Link, useNavigate } from "react-router-dom";
 
-const Hero = () => {
+const Hero = ({userType}) => {
     return (
         <>
       <section className="bg-gray-100 text-center py-12 px-6">
@@ -12,9 +13,16 @@ const Hero = () => {
           <p className="mt-4 text-lg md:text-xl text-gray-600 max-w-2xl mx-auto">
             Affordable hourly & daily rentals with no hidden charges.
           </p>
-          <button className="mt-6 px-6 py-3 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg shadow-lg">
-            Search Cars
-          </button>
+          {(userType?.userType === "guest" || !userType) && (
+            <Link to="/search-car" className="mt-6 inline-block px-6 py-3 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg shadow-lg">
+              Search Cars
+            </Link>
+          )}
+          {(userType?.userType === "owner") && (
+            <Link to="/add-car" className="mt-6 inline-block px-6 py-3 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg shadow-lg">
+              Add Car
+            </Link>
+          )}
         </div>
 
         {/* Hero image */}

@@ -10,7 +10,9 @@ const Signup = () => {
   // Yup validation schema
   const SignupSchema = Yup.object({
     name: Yup.string().required("Full Name is required"),
-    email: Yup.string().email("Invalid email format").required("Email is required"),
+    email: Yup.string()
+      .email("Invalid email format")
+      .required("Email is required"),
     password: Yup.string()
       .min(6, "Password must be at least 6 characters")
       .required("Password is required"),
@@ -21,7 +23,10 @@ const Signup = () => {
 
   const handleSubmit = async (values, { setSubmitting, resetForm }) => {
     try {
-      const response = await axios.post("http://localhost:3001/api/register", values);
+      const response = await axios.post(
+        "http://localhost:3001/api/register",
+        values
+      );
 
       if (response.data.message === "User registered successfully") {
         console.log("Signup Successful");
@@ -40,7 +45,13 @@ const Signup = () => {
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-50">
       <Formik
-        initialValues={{ name: "", email: "", password: "", confirmPassword: "" }}
+        initialValues={{
+          name: "",
+          email: "",
+          password: "",
+          confirmPassword: "",
+          userType: ""
+        }}
         validationSchema={SignupSchema}
         onSubmit={handleSubmit}
       >
@@ -132,6 +143,38 @@ const Signup = () => {
               />
               <ErrorMessage
                 name="confirmPassword"
+                component="div"
+                className="text-red-500 text-sm mt-1"
+              />
+            </div>
+
+            {/* User Type (Radio Buttons) */}
+            <div className="mb-4">
+              <span className="block text-sm font-medium text-gray-700 mb-2">
+                User Type
+              </span>
+              <div className="flex gap-6">
+                <label className="flex items-center">
+                  <Field
+                    type="radio"
+                    name="userType"
+                    value="guest"
+                    className="mr-2"
+                  />
+                  Guest
+                </label>
+                <label className="flex items-center">
+                  <Field
+                    type="radio"
+                    name="userType"
+                    value="owner"
+                    className="mr-2"
+                  />
+                  Owner
+                </label>
+              </div>
+              <ErrorMessage
+                name="userType"
                 component="div"
                 className="text-red-500 text-sm mt-1"
               />

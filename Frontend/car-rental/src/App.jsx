@@ -7,11 +7,20 @@ import Login from './pages/Login'
 import Signup from './pages/Signup'
 import { ToastContainer } from 'react-toastify'
 import { useEffect } from 'react'
+import AddCar from './pages/AddCar'
 
 function App() {
 
  const[user,setUser] = useState(null);
+ const [userType,setUserType] = useState(null);
  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+ useEffect(() => {
+    const storedUser = localStorage.getItem("user");
+    if (storedUser) {
+      setUserType(JSON.parse(storedUser));
+    }
+  }, []);
 
  useEffect(()=> {
   const checkAuthStatus = async () => {
@@ -33,12 +42,13 @@ function App() {
   return (
     <>
     <Router>
-      <NavBar isLoggedIn= {isLoggedIn} setIsLoggedIn={setIsLoggedIn}></NavBar>
+      <NavBar isLoggedIn= {isLoggedIn} setIsLoggedIn={setIsLoggedIn} userType={userType} setUserType={setUserType}></NavBar>
       <ToastContainer></ToastContainer>
       <Routes>
-        <Route path="/" element={<Home />} />
+        <Route path="/" element={<Home userType={userType}></Home>} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Signup />} />
+        <Route path="/add-car" element={<AddCar />} />
       </Routes>
     </Router>
     </>
