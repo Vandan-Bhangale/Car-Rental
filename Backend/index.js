@@ -5,6 +5,7 @@ require('dotenv').config();
 const session = require('express-session');
 const mongodbStore = require('connect-mongodb-session')(session);
 const userRoutes = require('./Routes/userRoute');
+const carRoutes = require('./Routes/CarRoutes');
 
 const app = express();
 
@@ -17,6 +18,10 @@ const store = new mongodbStore({
     collection: 'sessions'
 });
 
+app.use('/uploads', express.static('uploads'));
+
+
+//Session for localhost
 app.use(session({
     secret: process.env.SESSION_SECRET,
     resave: false,
@@ -30,6 +35,7 @@ app.use(session({
 }));
 
 app.use('/api',userRoutes)
+app.use('/api',carRoutes)
 
 const PORT = 3001;
 

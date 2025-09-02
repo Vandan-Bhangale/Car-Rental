@@ -19,10 +19,12 @@ exports.postLogin =async (req,res) => {
         //Store user in session
         req.session.user = {
             id: existingUser._id,
-            email: existingUser.email
+            email: existingUser.email,
+            userType: existingUser.userType
         };
 
         req.session.isLoggedIn = true;
+        req.session.userId = existingUser._id;
 
         req.session.save((error) => {
             if(error) {
@@ -35,6 +37,7 @@ exports.postLogin =async (req,res) => {
                 user: {
                     id: existingUser._id.toString(),
                     email: existingUser.email,
+                    userType: existingUser.userType
                 }
             })
         })
@@ -64,23 +67,37 @@ exports.postLogout = (req, res) => {
 }
 
 exports.postSignup = async (req, res) => {
-    const {name,email,password,confirmPassword} = req.body;
+    const { name, email, password, confirmPassword, userType } = req.body;
 
-    if(password !== confirmPassword) {
-        return res.status(400).json({message: "Passwords do not match"});
+    // Check if passwords match
+    if (password !== confirmPassword) {
+        return res.status(400).json({ message: "Passwords do not match" });
     }
 
     try {
+        // Hash password
         const hashedPassword = await bcrypt.hash(password, 10);
+
+        // Create new user
         const newUser = new User({
             name,
             email,
-            password: hashedPassword
+            password: hashedPassword,
+            userType   // ✅ add userType
         });
+
         await newUser.save();
-        res.status(201).json({message: "User registered successfully"});
+
+        res.status(201).json({ message: "User registered successfully" });
     } catch (error) {
         console.error("Signup error:", error);
-        res.status(500).json({message: "Internal server error"});
+
+        // Handle duplicate email error (MongoDB error code 11000)
+        if (error.code === 11000) {
+            return res.status(400).json({ message: "Email already registered" });
+        }
+
+        res.status(500).json({ message: "Internal server error" });
     }
-}
+};
+
