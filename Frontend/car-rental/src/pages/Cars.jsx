@@ -84,6 +84,8 @@ const Cars = () => {
           ))}
         </div>
       </div>
+
+      
       <Footer></Footer>
     </>
   );

@@ -52,7 +52,7 @@ function App() {
         <Route path="/register" element={<Signup />} />
         <Route path="/add-car" element={<AddCar />} />
         <Route path="/cars" element={<Cars />} />
-        <Route path="/car-details/:id" element={<CarDetail />} />
+        <Route path="/car-details/:id" element={<CarDetail isLoggedIn={isLoggedIn} />} />
       </Routes>
     </Router>
     </>
