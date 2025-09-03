@@ -81,7 +81,7 @@ const NavBar = ({ setIsLoggedIn, isLoggedIn,userType,setUserType }) => {
       {userType?.userType === "guest" && (
         <>
           <Link
-            to="/search"
+            to="/cars"
             className="px-4 py-2 rounded-xl bg-blue-50 text-blue-600 hover:bg-blue-600 hover:text-white font-medium transition-all duration-300 shadow-sm"
           >
             Search Car

@@ -14,7 +14,7 @@ const Hero = ({userType}) => {
             Affordable hourly & daily rentals with no hidden charges.
           </p>
           {(userType?.userType === "guest" || !userType) && (
-            <Link to="/search-car" className="mt-6 inline-block px-6 py-3 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg shadow-lg">
+            <Link to="/cars" className="mt-6 inline-block px-6 py-3 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg shadow-lg">
               Search Cars
             </Link>
           )}

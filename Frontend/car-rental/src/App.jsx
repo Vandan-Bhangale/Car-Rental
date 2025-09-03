@@ -8,6 +8,8 @@ import Signup from './pages/Signup'
 import { ToastContainer } from 'react-toastify'
 import { useEffect } from 'react'
 import AddCar from './pages/AddCar'
+import Cars from './pages/Cars'
+import CarDetail from './pages/CarDetail'
 
 function App() {
 
@@ -49,6 +51,8 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Signup />} />
         <Route path="/add-car" element={<AddCar />} />
+        <Route path="/cars" element={<Cars />} />
+        <Route path="/car-details/:id" element={<CarDetail />} />
       </Routes>
     </Router>
     </>
