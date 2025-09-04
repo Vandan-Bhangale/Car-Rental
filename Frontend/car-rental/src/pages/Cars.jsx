@@ -8,7 +8,7 @@ const Cars = () => {
   useEffect(() => {
     try {
       const fetchCars = async () => {
-        const response = await axios.get("http://localhost:3001/api/getCars");
+        const response = await axios.get(`${import.meta.env.VITE_GENERAL_API}/api/getCars`);
         setCars(response.data);
         // console.log("Fetched cars:", response.data);
       };
@@ -43,7 +43,7 @@ const Cars = () => {
                 {car.image && (
                   <img
                     className="w-full h-40 object-cover"
-                    src={`http://localhost:3001/uploads/${car.image}`}
+                    src={`${import.meta.env.VITE_GENERAL_API}/uploads/${car.image}`}
                     alt={car.title}
                   />
                 )}

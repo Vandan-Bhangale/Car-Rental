@@ -10,7 +10,7 @@ const NavBar = ({ setIsLoggedIn, isLoggedIn,userType,setUserType }) => {
  
   const handleLogout = async () => {
     try {
-      await axios.post(`http://localhost:3001/api/logout`, {}, { withCredentials: true });
+      await axios.post(`${import.meta.env.VITE_GENERAL_API}/api/logout`, {}, { withCredentials: true });
       Cookies.remove('isLoggedIn'); // Remove cookie
       setIsLoggedIn(false);         // Update state
       localStorage.removeItem("user"); // Remove user info from localStorage

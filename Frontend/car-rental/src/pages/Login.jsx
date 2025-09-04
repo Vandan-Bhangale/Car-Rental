@@ -22,7 +22,7 @@ const Login = () => {
     //setSubmitting is formik inbuilt function
     try {
       const response = await axios.post(
-        "http://localhost:3001/api/login",
+        `${import.meta.env.VITE_GENERAL_API}/api/login`,
         values,
         { withCredentials: true }
       );

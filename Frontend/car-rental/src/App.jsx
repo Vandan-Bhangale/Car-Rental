@@ -10,6 +10,7 @@ import { useEffect } from 'react'
 import AddCar from './pages/AddCar'
 import Cars from './pages/Cars'
 import CarDetail from './pages/CarDetail'
+import MyBookings from './pages/MyBookings'
 
 function App() {
 
@@ -27,7 +28,7 @@ function App() {
  useEffect(()=> {
   const checkAuthStatus = async () => {
     try {
-        const response = await fetch(`http://localhost:3001/api/status`, {
+        const response = await fetch(`${import.meta.env.VITE_GENERAL_API}/api/status`, {
             method: 'GET',
             credentials: 'include'
         });
@@ -53,6 +54,7 @@ function App() {
         <Route path="/add-car" element={<AddCar />} />
         <Route path="/cars" element={<Cars />} />
         <Route path="/car-details/:id" element={<CarDetail isLoggedIn={isLoggedIn} />} />
+        <Route path="/my-bookings" element={<MyBookings />} />
       </Routes>
     </Router>
     </>

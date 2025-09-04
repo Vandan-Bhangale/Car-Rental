@@ -24,7 +24,7 @@ const Signup = () => {
   const handleSubmit = async (values, { setSubmitting, resetForm }) => {
     try {
       const response = await axios.post(
-        "http://localhost:3001/api/register",
+        `${import.meta.env.VITE_GENERAL_API}/api/register`,
         values
       );
 

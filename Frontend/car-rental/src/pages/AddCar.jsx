@@ -42,7 +42,7 @@ const AddCar = () => {
       formData.append("Description", values.Description);
       formData.append("image", values.image);
 
-        const Response = await axios.post('http://localhost:3001/api/postCar', formData, { 
+        const Response = await axios.post(`${import.meta.env.VITE_GENERAL_API}/api/postCar`, formData, { 
           withCredentials: true,
           headers: {
               "Content-Type": "multipart/form-data"

@@ -14,7 +14,7 @@ const CarDetail = ({isLoggedIn}) => {
     const fetchCar = async () => {
       try {
         const res = await axios.get(
-          `http://localhost:3001/api/getCarsById/${id}`
+          `${import.meta.env.VITE_GENERAL_API}/api/getCarsById/${id}`
         );
         setCar(res.data);
         console.log("Fetched car details:", res.data);
@@ -25,20 +25,12 @@ const CarDetail = ({isLoggedIn}) => {
     fetchCar();
   }, [id]);
 
-  const handleBookingSubmit = (e) => {
-    e.preventDefault();
-    const formData = new FormData(e.target);
-    const bookingData = {
-      pickupLocation: formData.get("pickupLocation"),
-      date: formData.get("date"),
-      carId: id, // from useParams
-    };
-
-    // axios.post("/api/bookCar", bookingData)
-    //   .then(...)
-    //   .catch(...);
-
-    setShowBookingForm(false); // close popup after submission
+  const notify = () => {
+    toast(CustomComponent, {
+      autoClose: 8000,
+      // removes the built-in progress bar
+      customProgressBar: true
+    });
   };
 
   return (
@@ -57,7 +49,7 @@ const CarDetail = ({isLoggedIn}) => {
             {/* Image */}
             <div className="w-full max-w-3xl">
               <img
-                src={`http://localhost:3001/uploads/${car.image}`}
+                src={`${import.meta.env.VITE_GENERAL_API}/uploads/${car.image}`}
                 alt={car.title}
                 className="w-full h-[350px] object-cover rounded-2xl shadow-lg"
               />
@@ -127,6 +119,7 @@ const CarDetail = ({isLoggedIn}) => {
       {showBookingForm && (
         <BookingForm showBookingForm={showBookingForm} setShowBookingForm={setShowBookingForm} />
       )}
+      
       <Footer></Footer>
     </>
   );
