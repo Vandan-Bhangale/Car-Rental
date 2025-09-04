@@ -6,6 +6,7 @@ const session = require('express-session');
 const mongodbStore = require('connect-mongodb-session')(session);
 const userRoutes = require('./Routes/userRoute');
 const carRoutes = require('./Routes/CarRoutes');
+const BoookingRoutes = require('./Routes/BookingRoutes');
 
 const app = express();
 
@@ -36,6 +37,7 @@ app.use(session({
 
 app.use('/api',userRoutes)
 app.use('/api',carRoutes)
+app.use('/api',BoookingRoutes)
 
 const PORT = 3001;
 
