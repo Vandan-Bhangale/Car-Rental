@@ -25,14 +25,6 @@ const CarDetail = ({isLoggedIn}) => {
     fetchCar();
   }, [id]);
 
-  const notify = () => {
-    toast(CustomComponent, {
-      autoClose: 8000,
-      // removes the built-in progress bar
-      customProgressBar: true
-    });
-  };
-
   return (
     <>
       <div className="flex flex-col gap-8 mt-10 px-4 items-center">

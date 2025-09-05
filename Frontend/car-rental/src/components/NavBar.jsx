@@ -87,7 +87,7 @@ const NavBar = ({ setIsLoggedIn, isLoggedIn,userType,setUserType }) => {
             Search Car
           </Link>
           <Link
-            to="/bookings"
+            to="/my-bookings"
             className="px-4 py-2 rounded-xl bg-blue-50 text-blue-600 hover:bg-blue-600 hover:text-white font-medium transition-all duration-300 shadow-sm"
           >
             My Bookings

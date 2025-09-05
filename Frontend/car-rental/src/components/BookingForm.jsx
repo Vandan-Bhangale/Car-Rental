@@ -4,7 +4,8 @@ import { Link, useParams,useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
 const BookingForm = ({ setShowBookingForm }) => {
-  const { id } = useParams();
+  //The variable name 'id' in useParams should match the parameter name defined in your route in frontend.
+  const { id } = useParams();      
   const navigate = useNavigate();
 
   const [name, setName] = useState("");
@@ -22,7 +23,7 @@ const BookingForm = ({ setShowBookingForm }) => {
       );
       console.log("Booking successful:", response.data);
       toast.success("Booking successful!");
-      navigate("/bookings");
+      navigate("/my-bookings");
       setShowBookingForm(false);
     } catch (error) {
       console.error("Error during booking:", error);
