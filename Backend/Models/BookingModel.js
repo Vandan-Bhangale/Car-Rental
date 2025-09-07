@@ -26,6 +26,21 @@ const bookingSchema = new mongoose.Schema({
     totalAmount: {
         type: Number,
         required: true
+    },
+    paymentMethod: {
+        type: String,
+        enum: ['Online', 'Cash'],
+        required: true
+    },
+    paymentStatus: {
+        type: String,
+        enum: ['Pending', 'Completed'],
+        required: true,
+    },
+    bookingStatus: {
+        type: String,
+        enum: ['Booked', 'Completed'],
+        required: true,
     }
 })
 

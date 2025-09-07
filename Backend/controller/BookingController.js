@@ -1,9 +1,14 @@
 const BookingModel = require("../Models/BookingModel");
 const CarModel = require("../Models/CarModel");
+const mongoose = require("mongoose");
 
 exports.createBooking = async (req, res) => {
   try {
-    const { name, carId, startDate, endDate, location } = req.body;
+    const { name, carId, startDate, endDate, location,paymentMethod,paymentStatus,bookingStatus } = req.body;
+
+    if (!mongoose.Types.ObjectId.isValid(carId)) {
+  return res.status(400).json({ message: "Invalid car ID format." });
+}
 
     const car = await CarModel.findById(carId); //Getting car document from carID
     if (!car) {
@@ -27,6 +32,9 @@ exports.createBooking = async (req, res) => {
       endDate: formattedEnd,
       location,
       totalAmount,
+      paymentMethod,// Assuming online payment for now
+      paymentStatus,// Assuming payment is completed for now
+      bookingStatus,
     });
 
     await booking.save();
