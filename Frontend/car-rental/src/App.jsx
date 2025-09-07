@@ -11,6 +11,8 @@ import AddCar from './pages/AddCar'
 import Cars from './pages/Cars'
 import CarDetail from './pages/CarDetail'
 import MyBookings from './pages/MyBookings'
+import Payment from './components/Payment'
+import OnlinePayment from './components/OnlinePayment'
 
 function App() {
 
@@ -55,6 +57,8 @@ function App() {
         <Route path="/cars" element={<Cars />} />
         <Route path="/car-details/:id" element={<CarDetail isLoggedIn={isLoggedIn} />} />
         <Route path="/my-bookings" element={<MyBookings />} />
+        <Route path="/payment" element={<Payment />} />
+        <Route path="/onlinePayment" element={<OnlinePayment />} />
       </Routes>
     </Router>
     </>

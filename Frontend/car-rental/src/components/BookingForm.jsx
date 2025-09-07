@@ -13,22 +13,34 @@ const BookingForm = ({ setShowBookingForm }) => {
   const [endDate, setEndDate] = useState("");
   const [location, setLocation] = useState("");
 
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault();
+  //   try {
+  //     const response = await axios.post(
+  //       `${import.meta.env.VITE_GENERAL_API}/api/bookings`,
+  //       { name, startDate, endDate, location, carId: id },
+  //       { withCredentials: true }
+  //     );
+  //     console.log("Booking successful:", response.data);
+  //     toast.success("Booking successful!");
+  //     navigate("/my-bookings");
+  //     setShowBookingForm(false);
+  //   } catch (error) {
+  //     console.error("Error during booking:", error);
+  //   }
+  // };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post(
-        `${import.meta.env.VITE_GENERAL_API}/api/bookings`,
-        { name, startDate, endDate, location, carId: id },
-        { withCredentials: true }
-      );
-      console.log("Booking successful:", response.data);
-      toast.success("Booking successful!");
-      navigate("/my-bookings");
+      const bookingData = { name, startDate, endDate, location, carId: id };
+      console.log("Booking Data:", bookingData); // Log the booking data to be sent
+      navigate('/payment', { state: { bookingData } });
       setShowBookingForm(false);
     } catch (error) {
       console.error("Error during booking:", error);
     }
-  };
+  }
 
   return (
     <>
@@ -77,7 +89,7 @@ const BookingForm = ({ setShowBookingForm }) => {
               onClick={handleSubmit}
               className="bg-blue-600 inline-block text-white px-4 py-2 rounded hover:bg-blue-700"
             >
-              Confirm Booking
+              Continue
             </button>
           </form>
         </div>

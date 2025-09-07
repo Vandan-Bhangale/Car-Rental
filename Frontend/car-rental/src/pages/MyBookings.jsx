@@ -33,7 +33,7 @@ const MyBookings = () => {
   const handleCancel = async (bookingId) => {
     try {
       console.log("Attempting to cancel booking with ID:", bookingId);
-      
+
       const response = await axios.delete(
         `${import.meta.env.VITE_GENERAL_API}/api/cancelbooking/${bookingId}`,
         { withCredentials: true }
@@ -43,7 +43,7 @@ const MyBookings = () => {
     } catch (error) {
       console.error("Error cancelling booking:", error);
     }
-  }
+  };
 
   return (
     <>
@@ -89,6 +89,26 @@ const MyBookings = () => {
               </div>
 
               <div className="ml-6">
+                {/* Booking Name */}
+                <div className="flex gap-4">
+                  <p className={'rounded-2xl px-2 ' + (booking.paymentMethod === "Online" ? "bg-blue-200 text-blue-600" : "bg-yellow-200 text-yellow-600")}>
+                    {booking.paymentMethod}
+                  </p>
+                  <p
+                    className={`rounded-2xl px-2 ${
+                      booking.paymentStatus === "Completed"
+                        ? "bg-green-200 text-green-600"
+                        : "bg-red-200 text-red-500"
+                    }`}
+                  >
+                    {booking.paymentStatus}
+                  </p>
+                  <p className="bg-green-200 text-green-600 rounded-2xl px-2">
+                    {booking.bookingStatus}
+                  </p>
+                </div>
+                <br />
+                
                 {/* Time Period */}
                 <p>⏱️ Booking Period</p>
                 <p className="ml-6 text-black font-bold font-mono">
@@ -112,7 +132,10 @@ const MyBookings = () => {
                 </p>
               </div>
 
-              <button onClick={() => handleCancel(booking._id)} className="absolute top-2 right-2 text-sm text-red-600 hover:underline">
+              <button
+                onClick={() => handleCancel(booking._id)}
+                className="absolute top-2 right-2 text-sm text-red-600 hover:underline"
+              >
                 Cancel
               </button>
             </div>
