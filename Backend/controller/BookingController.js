@@ -69,3 +69,31 @@ exports.cancelBooking = async (req, res) => {
         res.status(500).json({message: "Server error", error});
     }
 }
+
+exports.getBookingCount = async (req, res) => {
+  try {
+    const bookingCount = await BookingModel.countDocuments();
+    res.status(200).json({count:bookingCount});
+  } catch (error) {
+    console.log('Error fetching booking count:', error);
+    res.status(500).json({ message: "Server error", error });
+  }
+}
+
+exports.getTotalRevenue = async (req,res) => {
+  try {
+    const result = await BookingModel.aggregate([
+      {
+        $group: {
+          _id:null,
+          totalRevenue: { $sum: "$totalAmount" }
+        }
+      }
+    ]);
+
+    const totalRevenue = await result[0]?.totalRevenyue || 0;
+    res.status(200).json({totalRevenue});
+  } catch (error) {
+    res.status(400).json({message: "Server error", error})
+  }
+}

@@ -6,5 +6,6 @@ const upload = require('../multerConfig');
 Router.post('/postCar', upload.single('image'), CarController.postCar);
 Router.get('/getCars', CarController.getCars);
 Router.get('/getCarsById/:id', CarController.getCarsById);
+Router.get('/carCount', CarController.getCarCount);
 
 module.exports = Router;
