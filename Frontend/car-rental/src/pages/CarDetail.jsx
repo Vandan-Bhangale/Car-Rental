@@ -1,11 +1,11 @@
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { use, useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import Footer from "../components/Footer";
 import { toast } from "react-toastify";
 import BookingForm from "../components/BookingForm";
 
-const CarDetail = ({isLoggedIn}) => {
+const CarDetail = ({isLoggedIn,userType}) => {
   const { id } = useParams(); // ✅ gets :id from URL
   const [car, setCar] = useState(null);
   const [showBookingForm, setShowBookingForm] = useState(false);
@@ -88,7 +88,8 @@ const CarDetail = ({isLoggedIn}) => {
                   Price:{" "}
                   <span className="text-blue-600">${car.DailyPrice}</span> / day
                 </p>
-                <button
+                {userType?.userType === "guest" && (
+                  <button
                   onClick={() => {
                     if (isLoggedIn) {
                         setShowBookingForm(true)
@@ -100,6 +101,7 @@ const CarDetail = ({isLoggedIn}) => {
                 >
                   Book Now
                 </button>
+                )}
               </div>
             </div>
           </>

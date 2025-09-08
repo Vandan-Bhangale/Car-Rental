@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import './App.css'
 import NavBar from './components/NavBar'
-import { Route, Routes, BrowserRouter as Router } from 'react-router-dom'
+import { Route, Routes, BrowserRouter as Router,useNavigate, Navigate } from 'react-router-dom'
 import Home from './pages/Home'
 import Login from './pages/Login'
 import Signup from './pages/Signup'
@@ -13,6 +13,8 @@ import CarDetail from './pages/CarDetail'
 import MyBookings from './pages/MyBookings'
 import Payment from './components/Payment'
 import OnlinePayment from './components/OnlinePayment'
+import DashBoardLayout from './components/DashBoardLayout'
+import Dashboard from './pages/DashBoard'
 
 function App() {
 
@@ -55,10 +57,16 @@ function App() {
         <Route path="/register" element={<Signup />} />
         <Route path="/add-car" element={<AddCar />} />
         <Route path="/cars" element={<Cars />} />
-        <Route path="/car-details/:id" element={<CarDetail isLoggedIn={isLoggedIn} />} />
+        <Route path="/car-details/:id" element={<CarDetail isLoggedIn={isLoggedIn} userType={userType} />} />
         <Route path="/my-bookings" element={<MyBookings />} />
         <Route path="/payment" element={<Payment />} />
         <Route path="/onlinePayment" element={<OnlinePayment />} />
+        <Route path="/dashboard" element={<DashBoardLayout />}>
+          <Route index element={<Navigate to="/dashboard/dashboard" />} />
+            <Route path="cars" element={<Cars />} />
+            <Route path="my-bookings" element={<MyBookings />} />
+            <Route path="dashboard" element={<Dashboard />} />
+        </Route>
       </Routes>
     </Router>
     </>

@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
+import NoBookings from "../components/NoBookings";
 
 const MyBookings = () => {
   const [bookings, setBookings] = useState([]);
@@ -55,7 +56,7 @@ const MyBookings = () => {
       </div>
 
       {bookings.length === 0 ? (
-        <p>No bookings found.</p>
+        <><NoBookings /></>
       ) : (
         <div className="flex flex-col items-center">
           {bookings.map((booking) => (
@@ -134,9 +135,9 @@ const MyBookings = () => {
 
               <button
                 onClick={() => handleCancel(booking._id)}
-                className="absolute top-2 right-2 text-sm text-red-600 hover:underline"
+                className="flex gap-2 absolute top-2 right-2 text-sm text-red-600 hover:underline"
               >
-                Cancel
+                Cancel Booking
               </button>
             </div>
           ))}
