@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import './App.css'
 import NavBar from './components/NavBar'
-import { Route, Routes, BrowserRouter as Router,useNavigate, Navigate } from 'react-router-dom'
+import { Route, Routes, BrowserRouter as Router, Navigate } from 'react-router-dom'
 import Home from './pages/Home'
 import Login from './pages/Login'
 import Signup from './pages/Signup'
@@ -14,7 +14,7 @@ import MyBookings from './pages/MyBookings'
 import Payment from './components/Payment'
 import OnlinePayment from './components/OnlinePayment'
 import DashBoardLayout from './components/DashBoardLayout'
-import Dashboard from './pages/DashBoard'
+import Dashboard from './pages/Dashboard'
 
 function App() {
 
