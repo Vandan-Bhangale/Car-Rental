@@ -28,7 +28,7 @@ const Dashboard = () => {
     fetch(`${import.meta.env.VITE_GENERAL_API}/api/totalRevenue`)
       .then((response) => response.json())
       .then((data) => {
-        setTotalRevenue(data.totalRevenue);
+        setTotalRevenue(data.revenue);
       });
   }, []);
 
@@ -59,7 +59,7 @@ const Dashboard = () => {
           {/* Total Revenue */}
           <div className="flex-1 md:max-w-[196px] p-4 bg-white rounded shadow">
             <p className="inline-block">Total Revenue</p> <span className="text-2xl">💵</span>
-            <p className="text-xl font-semibold mt-1">$ {totalRevenue}</p>
+            <p className="text-xl font-bold mt-1 text-blue-500">$ {totalRevenue}</p>
           </div>
         </div>
       </div>
