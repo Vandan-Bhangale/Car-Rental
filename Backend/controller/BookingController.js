@@ -91,8 +91,8 @@ exports.getTotalRevenue = async (req,res) => {
       }
     ]);
 
-    const totalRevenue = await result[0]?.totalRevenyue || 0;
-    res.status(200).json({totalRevenue});
+    const revenue = await result[0]?.totalRevenue || 0;
+    res.status(200).json({revenue});
   } catch (error) {
     res.status(400).json({message: "Server error", error})
   }
