@@ -51,3 +51,32 @@ exports.getCarCount = async (req,res) => {
         res.status(500).json({ message: "Internal server error" });
     }
 }
+
+exports.deleteCar = async (req,res) => {
+    try {
+        const carId = req.params.id;
+        const deletedCar = await car.findByIdAndDelete(carId);
+        if (!deletedCar) {
+            return res.status(404).json({ message: "Car not found" });
+        }
+        res.status(200).json({ message: "Car deleted successfully" });
+    } catch (error) {
+        console.error("Error deleting car:", error);
+        res.status(500).json({ message: "Internal server error" });
+    }
+}
+
+exports.updateCar = async (req, res) => {
+    try {
+        const carId = req.params.id;
+        const updatedData = req.body;
+        const updateCar = await car.findByIdAndUpdate(carId, updatedData, { new: true });
+        if (!updateCar) {
+            return res.status(404).json({ message: "Car not found" });
+        }
+        res.status(200).json({ message: "Car updated successfully", car: updateCar });
+    } catch (error) {
+        console.error("Error updating car:", error);
+        res.status(500).json({ message: "Internal server error" });
+    }
+}

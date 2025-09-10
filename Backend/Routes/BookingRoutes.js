@@ -7,5 +7,6 @@ router.get('/mybookings', bookingController.getUserBookings);
 router.delete('/cancelbooking/:bookingId', bookingController.cancelBooking);
 router.get('/bookingCount', bookingController.getBookingCount);
 router.get('/totalRevenue', bookingController.getTotalRevenue);
+router.get('/totalBookings', bookingController.getBookingDetails);
 
 module.exports = router;

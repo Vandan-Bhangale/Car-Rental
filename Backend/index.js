@@ -22,34 +22,34 @@ const store = new mongodbStore({
 });
 
 app.use('/uploads', express.static('uploads'));
-app.set("trust proxy", 1);  // trust first proxy (Render/Heroku/etc.)
+// app.set("trust proxy", 1);  // trust first proxy (Render/Heroku/etc.)
 
 //Session for localhost
-// app.use(session({
-//     secret: process.env.SESSION_SECRET,
-//     resave: false,
-//     saveUninitialized: false,
-//     store: store,
-//     cookie: {
-//         httpOnly: true,
-//         secure:false,
-//         maxAge: 1000 * 60 * 60 * 24 // 1 day
-//     }
-// }));
+app.use(session({
+    secret: process.env.SESSION_SECRET,
+    resave: false,
+    saveUninitialized: false,
+    store: store,
+    cookie: {
+        httpOnly: true,
+        secure:false,
+        maxAge: 1000 * 60 * 60 * 24 // 1 day
+    }
+}));
 
 // This session is for deployed version on render and vercel
-app.use(session({
-  secret: process.env.SESSION_SECRET,  
-  resave: false,
-  saveUninitialized: false,
-  cookie: {
-    httpOnly: true,
-    secure: true,       
-    sameSite: "none",  
-    maxAge: 24 * 60 * 60 * 1000 
-  },
-  store
-}));
+// app.use(session({
+//   secret: process.env.SESSION_SECRET,  
+//   resave: false,
+//   saveUninitialized: false,
+//   cookie: {
+//     httpOnly: true,
+//     secure: true,       
+//     sameSite: "none",  
+//     maxAge: 24 * 60 * 60 * 1000 
+//   },
+//   store
+// }));
 
 app.use('/api',userRoutes)
 app.use('/api',carRoutes)
