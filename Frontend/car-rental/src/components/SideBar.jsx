@@ -18,7 +18,7 @@ const SideBar = () => {
           </li>
           <li>
             <Link
-              to="/"
+              to="/dashboard/manage-car"
               className="block px-4 py-2 rounded-md hover:bg-blue-100 hover:text-blue-700 transition"
             >
               Manage Car
@@ -34,7 +34,7 @@ const SideBar = () => {
           </li>
           <li>
             <Link
-              to="/dashboard/my-bookings"
+              to="/dashboard/booking-details"
               className="block px-4 py-2 rounded-md hover:bg-blue-100 hover:text-blue-700 transition"
             >
               Bookings

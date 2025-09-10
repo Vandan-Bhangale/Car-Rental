@@ -15,6 +15,9 @@ import Payment from './components/Payment'
 import OnlinePayment from './components/OnlinePayment'
 import DashBoardLayout from './components/DashBoardLayout'
 import Dashboard from './pages/Dashboard'
+import EditCar from './pages/EditCar'
+import ManageCar from './pages/ManageCar'
+import BookingDetails from './pages/BookingDetails'
 
 function App() {
 
@@ -66,6 +69,9 @@ function App() {
             <Route path="cars" element={<Cars />} />
             <Route path="my-bookings" element={<MyBookings />} />
             <Route path="dashboard" element={<Dashboard />} />
+            <Route path="edit-car/:id" element={<EditCar />} />
+            <Route path="manage-car" element={<ManageCar />} />
+            <Route path="booking-details" element={<BookingDetails />} />
         </Route>
       </Routes>
     </Router>

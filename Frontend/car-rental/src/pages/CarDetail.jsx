@@ -1,6 +1,6 @@
 import axios from "axios";
-import { use, useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { Link, useParams,useNavigate } from "react-router-dom";
 import Footer from "../components/Footer";
 import { toast } from "react-toastify";
 import BookingForm from "../components/BookingForm";
@@ -9,6 +9,7 @@ const CarDetail = ({isLoggedIn,userType}) => {
   const { id } = useParams(); // ✅ gets :id from URL
   const [car, setCar] = useState(null);
   const [showBookingForm, setShowBookingForm] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchCar = async () => {
@@ -88,7 +89,7 @@ const CarDetail = ({isLoggedIn,userType}) => {
                   Price:{" "}
                   <span className="text-blue-600">${car.DailyPrice}</span> / day
                 </p>
-                {userType?.userType === "guest" && (
+                {userType?.userType === "guest" ? (
                   <button
                   onClick={() => {
                     if (isLoggedIn) {
@@ -100,6 +101,19 @@ const CarDetail = ({isLoggedIn,userType}) => {
                   className="px-8 py-3 bg-blue-600 text-white font-semibold rounded-xl hover:bg-blue-700 transition-all shadow-lg"
                 >
                   Book Now
+                </button>
+                ): (
+                    <button
+                  onClick={() => {
+                    if (isLoggedIn) {
+                        navigate(`/dashboard/edit-car/${id}`);
+                    } else {
+                        toast.error("Please login to Edit car")
+                    }
+                }}
+                  className="px-8 py-3 bg-blue-600 text-white font-semibold rounded-xl hover:bg-blue-700 transition-all shadow-lg"
+                >
+                  Edit Car
                 </button>
                 )}
               </div>
