@@ -30,7 +30,8 @@ exports.createBooking = async (req, res) => {
     const end = new Date(endDate);
     const formattedStart = new Date(startDate).toISOString().slice(0, 10);
     const formattedEnd = new Date(endDate).toISOString().slice(0, 10);
-    const days = Math.ceil(Math.abs(end - start) / (1000 * 60 * 60 * 24));
+    const days = Math.ceil(Math.abs(end - start) / (1000 * 60 * 60 * 24)) + 1;
+    if(days < 1) days = 1; // Minimum one day booking
     const totalAmount = days * ratePerDay;
 
     const booking = new BookingModel({
