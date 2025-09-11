@@ -124,47 +124,31 @@ exports.getTotalRevenue = async (req, res) => {
 // This is giving error
 exports.getBookingDetails = async (req, res) => {
   try {
-    const ownerId = req.session.userId;
-    console.log("Owner ID:", ownerId);
+    const ownerId = req.session.userId; // Assuming owner is logged in
+    // console.log("Owner ID:", ownerId);
+
     if (!ownerId) {
       return res.status(401).json({ message: "Unauthorized" });
     }
 
-    const bookings = await BookingModel.aggregate([
-      {
-        $lookup: {
-          from: "car",
-          localField: "carId",
-          foreignField: "_id",
-          as: "carDetails",
-        },
-      },
-      { $unwind: "$carDetails" },
-      { $match: { "carDetails.ownerId": mongoose.Types.ObjectId(ownerId) } },
-      {
-        $lookup: {
-          from: "user",
-          localField: "userId",
-          foreignField: "_id",
-          as: "userDetails",
-        },
-      },
-      { $unwind: "$userDetails" },
-      {
-        $project: {
-          _id: 0,
-          bookingId: "$_id",
-          customerName: "$userDetails.name",
-          carName: "$carDetails.Brand",
-          startDate: 1,
-          endDate: 1,
-        },
-      },
-      { $sort: { startDate: -1 } },
-    ]);
+    const bookings = await BookingModel.find()
+      .populate({
+        path: 'carId',
+        match: { ownerId: ownerId }, // Filter cars by owner ID
+        select: 'Brand Model ownerId', // Add 'ownerId' if you need to debug
+      })
+      .populate({
+        path: 'userId',
+        select: 'name email',
+      });
 
-    res.status(200).json({ bookings });
+    // Filter out bookings where carId is null (i.e. not owned by this owner)
+    const ownerBookings = bookings.filter(booking => booking.carId);
+
+    res.status(200).json({ bookings: ownerBookings });
   } catch (error) {
+    console.error("Error fetching booking details:", error);
     res.status(500).json({ message: "Server error", error });
   }
 };
+
