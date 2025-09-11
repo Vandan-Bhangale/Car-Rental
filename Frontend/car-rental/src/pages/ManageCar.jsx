@@ -1,11 +1,12 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link,useNavigate } from "react-router-dom";
 import { MdDelete } from "react-icons/md";
 import { toast } from "react-toastify";
 
 const ManageCar = () => {
   const [cars, setCars] = useState([]);
+  const navigate = useNavigate();
 
   //Fetching all cars from backend
   useEffect(() => {
@@ -30,6 +31,7 @@ const ManageCar = () => {
         `${import.meta.env.VITE_GENERAL_API}/api/deleteCar/${carId}`
       );
       setCars(cars.filter((car) => car._id !== carId));
+      navigate('/dashboard/manage-car');
       toast.success("Car deleted successfully");
     } catch (error) {
       console.error("Error deleting car:", error);

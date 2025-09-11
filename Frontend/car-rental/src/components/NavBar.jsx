@@ -102,7 +102,6 @@ const NavBar = ({ setIsLoggedIn, isLoggedIn, userType, setUserType }) => {
         {/* Auth Buttons */}
         {isLoggedIn ? (
           <>
-            
             <button
               onClick={handleLogout}
               className="px-5 py-2 rounded-xl bg-red-500 text-white hover:bg-red-600 font-semibold shadow-md transition-all duration-300"
