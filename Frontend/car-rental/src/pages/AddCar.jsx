@@ -5,6 +5,7 @@ import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 
 const AddCar = () => {
+  const navigate = useNavigate();
   //Yup validation schema
   const AddCarSchema = Yup.object({
     Brand: Yup.string().required("Brand is required"),
@@ -50,6 +51,7 @@ const AddCar = () => {
           }
         );
         console.log("Car posted successfully", Response.data);
+        navigate("/dashboard/cars");
         toast.success("Car added successfully");
     } catch (error) {
         console.error("Error posting car:", error);
