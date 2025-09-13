@@ -39,8 +39,8 @@ exports.postLogin =async (req,res) => {
                     email: existingUser.email,
                     userType: existingUser.userType
                 }
-            })
-        })
+            });
+        });
     } catch (error) {
         console.error("Error while logging in:", error);
         return res.status(500).json({message: "Internal server error"});
@@ -83,7 +83,7 @@ exports.postSignup = async (req, res) => {
             name,
             email,
             password: hashedPassword,
-            userType   // ✅ add userType
+            userType
         });
 
         await newUser.save();
