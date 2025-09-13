@@ -1,11 +1,11 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { Link, useParams,useNavigate } from "react-router-dom";
+import { Link, useParams, useNavigate } from "react-router-dom";
 import Footer from "../components/Footer";
 import { toast } from "react-toastify";
 import BookingForm from "../components/BookingForm";
 
-const CarDetail = ({isLoggedIn,userType}) => {
+const CarDetail = ({ isLoggedIn, userType }) => {
   const { id } = useParams(); // ✅ gets :id from URL
   const [car, setCar] = useState(null);
   const [showBookingForm, setShowBookingForm] = useState(false);
@@ -89,33 +89,22 @@ const CarDetail = ({isLoggedIn,userType}) => {
                   Price:{" "}
                   <span className="text-blue-600">${car.DailyPrice}</span> / day
                 </p>
-                {userType?.userType === "guest" ? (
-                  <button
-                  onClick={() => {
-                    if (isLoggedIn) {
-                        setShowBookingForm(true)
-                    } else {
-                        toast.error("Please login to book a car")
-                    }
-                }}
-                  className="px-8 py-3 bg-blue-600 text-white font-semibold rounded-xl hover:bg-blue-700 transition-all shadow-lg"
-                >
-                  Book Now
-                </button>
-                ): (
+                {isLoggedIn &&
+                  (userType?.userType === "guest" ? (
                     <button
-                  onClick={() => {
-                    if (isLoggedIn) {
-                        navigate(`/dashboard/edit-car/${id}`);
-                    } else {
-                        toast.error("Please login to Edit car")
-                    }
-                }}
-                  className="px-8 py-3 bg-blue-600 text-white font-semibold rounded-xl hover:bg-blue-700 transition-all shadow-lg"
-                >
-                  Edit Car
-                </button>
-                )}
+                      onClick={() => setShowBookingForm(true)}
+                      className="px-8 py-3 bg-blue-600 text-white font-semibold rounded-xl hover:bg-blue-700 transition-all shadow-lg"
+                    >
+                      Book Now
+                    </button>
+                  ) : (
+                    <button
+                      onClick={() => navigate(`/dashboard/edit-car/${id}`)}
+                      className="px-8 py-3 bg-blue-600 text-white font-semibold rounded-xl hover:bg-blue-700 transition-all shadow-lg"
+                    >
+                      Edit Car
+                    </button>
+                  ))}
               </div>
             </div>
           </>
@@ -125,9 +114,12 @@ const CarDetail = ({isLoggedIn,userType}) => {
       </div>
 
       {showBookingForm && (
-        <BookingForm showBookingForm={showBookingForm} setShowBookingForm={setShowBookingForm} />
+        <BookingForm
+          showBookingForm={showBookingForm}
+          setShowBookingForm={setShowBookingForm}
+        />
       )}
-      
+
       <Footer></Footer>
     </>
   );
