@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 
-// This is giving error
 const BookingDetails = () => {
   const [bookings, setBookings] = useState([]);
 
@@ -13,7 +12,6 @@ const BookingDetails = () => {
           { withCredentials: true }
         );
         setBookings(response.data.bookings);
-        console.log("Fetched bookings:", response.data.bookings);
       } catch (error) {
         console.error("Error fetching bookings:", error);
       }
@@ -23,62 +21,82 @@ const BookingDetails = () => {
   }, []);
 
   return (
-    <div className="max-w-4xl mx-auto px-4 py-8">
-      <h2 className="text-2xl font-bold mb-6 text-center text-gray-800">
+    <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+      <h2 className="text-xl sm:text-2xl lg:text-3xl font-bold mb-6 text-center text-gray-800">
         Bookings Details
       </h2>
 
       {bookings.length === 0 ? (
         <p className="text-center text-gray-500">No bookings found.</p>
       ) : (
-        <ul className="space-y-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {bookings.map((booking) => (
-            <li
+            <div
               key={booking._id}
-              className="border border-gray-200 rounded-lg shadow-sm p-6 bg-white hover:shadow-md transition-shadow"
+              className="bg-white rounded-lg shadow-md p-4 flex flex-col"
             >
-              <h3 className="text-xl font-semibold text-gray-800 mb-2">
-                {booking.carId?.Brand}{" "}
-                <span className="text-gray-500">({booking.carId?.Model})</span>
-              </h3>
+              {/* Car Info */}
+              <div className="mb-4">
+                <h3 className="text-lg font-semibold text-gray-900">
+                  {booking.carId?.Brand}
+                </h3>
+                <p className="text-sm text-gray-600">{booking.carId?.Model}</p>
+              </div>
 
-              <p className="text-gray-700">
-                <span className="font-medium text-gray-900">Customer:</span>{" "}
-                {booking.userId?.name}
-              </p>
+              {/* Customer & Location */}
+              <div className="space-y-2 mb-4">
+                <div className="flex items-center justify-between text-sm">
+                  <span className="font-medium text-gray-700">Customer:</span>
+                  <span className="text-gray-600">
+                    {booking.userId?.name || "N/A"}
+                  </span>
+                </div>
+                <div className="flex items-center justify-between text-sm">
+                  <span className="font-medium text-gray-700">Location:</span>
+                  <span className="text-gray-600">
+                    {booking.location || "N/A"}
+                  </span>
+                </div>
+              </div>
 
-              <p className="text-gray-700">
-                <span className="font-medium text-gray-900">Location:</span>{" "}
-                {booking.location}
-              </p>
+              {/* Dates */}
+              <div className="space-y-2 mb-4">
+                <div className="flex items-center justify-between text-sm">
+                  <span className="font-medium text-gray-700">Start Date:</span>
+                  <span className="text-gray-600">
+                    {new Date(booking.startDate).toLocaleDateString()}
+                  </span>
+                </div>
+                <div className="flex items-center justify-between text-sm">
+                  <span className="font-medium text-gray-700">End Date:</span>
+                  <span className="text-gray-600">
+                    {new Date(booking.endDate).toLocaleDateString()}
+                  </span>
+                </div>
+              </div>
 
-              <p className="text-gray-700">
-                <span className="font-medium text-gray-900">Start Date:</span>{" "}
-                {new Date(booking.startDate).toLocaleDateString()}
-              </p>
-
-              <p className="text-gray-700">
-                <span className="font-medium text-gray-900">End Date:</span>{" "}
-                {new Date(booking.endDate).toLocaleDateString()}
-              </p>
-
-              <p className="inline-flex items-center text-gray-700 font-semibold">
-                <span className="mr-2 font-medium text-gray-900">Payment:</span>
-                <span
-                  className={`inline-block mt-1 px-3 rounded-full shadow-sm ${
-                    booking.paymentStatus === "Pending"
-                      ? "bg-red-300 text-red-800"
-                      : booking.paymentStatus === "Completed"
-                      ? "bg-green-200 text-green-800"
-                      : "bg-gray-200 text-gray-700"
-                  }`}
-                >
-                  {booking.paymentStatus}
-                </span>
-              </p>
-            </li>
+              {/* Payment Status */}
+              <div className="mt-auto pt-4 border-t border-gray-100">
+                <div className="flex items-center justify-between">
+                  <span className="text-sm font-medium text-gray-700">
+                    Payment Status:
+                  </span>
+                  <span
+                    className={`px-3 py-1 text-xs font-medium rounded-full ${
+                      booking.paymentStatus === "Pending"
+                        ? "bg-yellow-100 text-yellow-800"
+                        : booking.paymentStatus === "Completed"
+                        ? "bg-green-100 text-green-800"
+                        : "bg-gray-100 text-gray-800"
+                    }`}
+                  >
+                    {booking.paymentStatus || "Unknown"}
+                  </span>
+                </div>
+              </div>
+            </div>
           ))}
-        </ul>
+        </div>
       )}
     </div>
   );
