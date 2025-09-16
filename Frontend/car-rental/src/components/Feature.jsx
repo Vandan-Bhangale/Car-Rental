@@ -44,9 +44,7 @@ const Featured = () => {
                 {car.image && (
                   <img
                     className="w-full h-40 object-cover"
-                    src={`${import.meta.env.VITE_GENERAL_API}/uploads/${
-                      car.image
-                    }`}
+                    src={car.image}
                     alt={car.title}
                   />
                 )}
