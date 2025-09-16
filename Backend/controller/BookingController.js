@@ -31,7 +31,7 @@ exports.createBooking = async (req, res) => {
     const formattedStart = new Date(startDate).toISOString().slice(0, 10);
     const formattedEnd = new Date(endDate).toISOString().slice(0, 10);
     const days = Math.ceil(Math.abs(end - start) / (1000 * 60 * 60 * 24)) + 1;
-    if(days < 1) days = 1; // Minimum one day booking
+    if (days < 1) days = 1; // Minimum one day booking
     const totalAmount = days * ratePerDay;
 
     const booking = new BookingModel({
@@ -134,17 +134,17 @@ exports.getBookingDetails = async (req, res) => {
 
     const bookings = await BookingModel.find()
       .populate({
-        path: 'carId',
+        path: "carId",
         match: { ownerId: ownerId }, // Filter cars by owner ID
-        select: 'Brand Model ownerId', // Add 'ownerId' if you need to debug
+        select: "Brand Model ownerId", // Add 'ownerId' if you need to debug
       })
       .populate({
-        path: 'userId',
-        select: 'name email',
+        path: "userId",
+        select: "name email",
       });
 
     // Filter out bookings where carId is null (i.e. not owned by this owner)
-    const ownerBookings = bookings.filter(booking => booking.carId);
+    const ownerBookings = bookings.filter((booking) => booking.carId);
 
     res.status(200).json({ bookings: ownerBookings });
   } catch (error) {
@@ -152,4 +152,3 @@ exports.getBookingDetails = async (req, res) => {
     res.status(500).json({ message: "Server error", error });
   }
 };
-

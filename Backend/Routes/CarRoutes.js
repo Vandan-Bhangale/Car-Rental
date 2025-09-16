@@ -1,7 +1,7 @@
 const express = require('express');
 const Router = express.Router();
 const CarController = require('../controller/carController');
-const upload = require('../multerConfig');
+const upload = require('../upload');
 
 Router.post('/postCar', upload.single('image'), CarController.postCar);
 Router.get('/getCars', CarController.getCars);
