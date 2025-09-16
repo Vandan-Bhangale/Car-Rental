@@ -13,23 +13,6 @@ const BookingForm = ({ setShowBookingForm }) => {
   const [endDate, setEndDate] = useState("");
   const [location, setLocation] = useState("");
 
-  // const handleSubmit = async (e) => {
-  //   e.preventDefault();
-  //   try {
-  //     const response = await axios.post(
-  //       `${import.meta.env.VITE_GENERAL_API}/api/bookings`,
-  //       { name, startDate, endDate, location, carId: id },
-  //       { withCredentials: true }
-  //     );
-  //     console.log("Booking successful:", response.data);
-  //     toast.success("Booking successful!");
-  //     navigate("/my-bookings");
-  //     setShowBookingForm(false);
-  //   } catch (error) {
-  //     console.error("Error during booking:", error);
-  //   }
-  // };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {

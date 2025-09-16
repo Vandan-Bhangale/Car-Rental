@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { Link,useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { MdDelete } from "react-icons/md";
 import { toast } from "react-toastify";
 
@@ -31,14 +31,24 @@ const ManageCar = () => {
         `${import.meta.env.VITE_GENERAL_API}/api/deleteCar/${carId}`
       );
       setCars(cars.filter((car) => car._id !== carId));
-      navigate('/dashboard/manage-car');
+      navigate("/dashboard/manage-car");
       toast.success("Car deleted successfully");
     } catch (error) {
       console.error("Error deleting car:", error);
     }
   };
+
   return (
     <>
+      <div className="max-w-6xl py-10 mx-auto px-4">
+        <h1 className="text-3xl font-bold text-gray-800 text-center">
+          Manage My Cars
+        </h1>
+        <p className="text-gray-600 text-center mt-2 mb-6">
+          Easily view, update, or remove cars from your personal fleet.
+        </p>
+      </div>
+
       <div className="max-w-6xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         {cars.slice(0, 6).map((car) => (
           <Link to={`/car-details/${car._id}`} key={car._id}>
@@ -86,7 +96,7 @@ const ManageCar = () => {
                 {/* Price */}
                 <div className="flex items-center justify-between mt-1">
                   <p className="text-base font-bold text-indigo-600">
-                    ${car.DailyPrice} / day
+                    ₹{car.DailyPrice} / day
                   </p>
                   <button onClick={() => deleteCar(car._id)}>
                     <MdDelete className="text-red-600 text-2xl hover:text-red-800" />

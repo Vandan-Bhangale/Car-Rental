@@ -3,12 +3,14 @@ import { useEffect, useState } from "react";
 import Footer from "../components/Footer";
 import { Link } from "react-router-dom";
 
-const Cars = () => {
+const Cars = ({ userType }) => {
   const [cars, setCars] = useState([]);
   useEffect(() => {
     try {
       const fetchCars = async () => {
-        const response = await axios.get(`${import.meta.env.VITE_GENERAL_API}/api/getCars`);
+        const response = await axios.get(
+          `${import.meta.env.VITE_GENERAL_API}/api/getCars`
+        );
         setCars(response.data);
         // console.log("Fetched cars:", response.data);
       };
@@ -23,11 +25,24 @@ const Cars = () => {
       <div className="px-6 py-10 bg-gray-50 min-h-screen">
         {/* Header */}
         <div className="text-center mb-10">
-          <h1 className="text-3xl font-bold text-gray-800">Available Cars</h1>
-          <p className="text-gray-600 mt-2">
-            Browse our selection of premium vehicles available for your next
-            adventure.
-          </p>
+          {userType === "guest" ? (
+            <>
+              <h1 className="text-3xl font-bold text-gray-800">
+                Available Cars
+              </h1>
+              <p className="text-gray-600 mt-2">
+                Browse our selection of premium vehicles available for your next
+                adventure.
+              </p>
+            </>
+          ) : (
+            <>
+              <h1 className="text-3xl font-bold text-gray-800">My Cars</h1>
+              <p className="text-gray-600 mt-2">
+                Track and manage your registered vehicles.
+              </p>
+            </>
+          )}
         </div>
 
         {/* Car Listing */}
@@ -43,7 +58,9 @@ const Cars = () => {
                 {car.image && (
                   <img
                     className="w-full h-40 object-cover"
-                    src={`${import.meta.env.VITE_GENERAL_API}/uploads/${car.image}`}
+                    src={`${import.meta.env.VITE_GENERAL_API}/uploads/${
+                      car.image
+                    }`}
                     alt={car.title}
                   />
                 )}
@@ -76,7 +93,7 @@ const Cars = () => {
 
                   {/* Price */}
                   <p className="text-base font-bold text-indigo-600 mt-1">
-                    ${car.DailyPrice} / day
+                    ₹{car.DailyPrice} / day
                   </p>
                 </div>
               </div>
@@ -85,7 +102,6 @@ const Cars = () => {
         </div>
       </div>
 
-      
       <Footer></Footer>
     </>
   );

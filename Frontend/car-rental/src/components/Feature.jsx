@@ -79,7 +79,7 @@ const Featured = () => {
 
                   {/* Price */}
                   <p className="text-base font-bold text-indigo-600 mt-1">
-                    ${car.DailyPrice} / day
+                    ₹{car.DailyPrice} / day
                   </p>
                 </div>
               </div>

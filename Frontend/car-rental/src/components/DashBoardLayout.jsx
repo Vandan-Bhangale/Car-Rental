@@ -9,7 +9,7 @@ const DashBoardLayout = () => {
         <SideBar />
 
         {/* Main Content Area */}
-        <div className="flex-1 p-6 overflow-auto">
+        <div className="md:ml-64 flex-1 p-6 overflow-auto">
           <Outlet />
         </div>
       </div>

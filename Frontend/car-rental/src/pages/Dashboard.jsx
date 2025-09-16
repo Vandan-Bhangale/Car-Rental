@@ -34,7 +34,7 @@ const Dashboard = () => {
 
   return (
     <>
-      <div>
+      <div className="mt-15 md:mt-0">
         <h2 className="text-2xl font-bold">Admin Dashboard</h2>
         <p className="text-gray-600 text-sm">
           Monitor overall performance including total cars, bookings
@@ -52,14 +52,18 @@ const Dashboard = () => {
 
           {/* Total Bookings */}
           <div className="flex-1 md:max-w-[196px] p-4 bg-white rounded shadow">
-            <p className="inline-block">Total Bookings</p> <span className="text-2xl">🗒️</span>
+            <p className="inline-block">Total Bookings</p>{" "}
+            <span className="text-2xl">🗒️</span>
             <p className="text-xl font-semibold mt-1">{bookingCount}</p>
           </div>
 
           {/* Total Revenue */}
           <div className="flex-1 md:max-w-[196px] p-4 bg-white rounded shadow">
-            <p className="inline-block">Total Revenue</p> <span className="text-2xl">💵</span>
-            <p className="text-xl font-bold mt-1 text-blue-500">$ {totalRevenue}</p>
+            <p className="inline-block">Total Revenue</p>{" "}
+            <span className="text-2xl">💵</span>
+            <p className="text-xl font-bold mt-1 text-blue-500">
+              ₹  {totalRevenue}
+            </p>
           </div>
         </div>
       </div>

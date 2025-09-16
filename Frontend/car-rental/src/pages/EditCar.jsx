@@ -2,60 +2,67 @@ import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import axios from "axios";
 import { toast } from "react-toastify";
-import { useParams,useNavigate } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { useEffect } from "react";
 
 const EditCar = () => {
-    const {id} = useParams();
-    const navigate = useNavigate();
+  const { id } = useParams();
+  const navigate = useNavigate();
 
-    const [initialValues, setInitialValues] = useState({
-        Brand: "",
-        Model: "",
-        Year: "",
-        DailyPrice: "",
-        Category: "",
-        Transmission: "",
-        FuelType: "",
-        SeatingCapacity: "",
-        Location: "",
-        Description: "",
-    });
+  const [initialValues, setInitialValues] = useState({
+    Brand: "",
+    Model: "",
+    Year: "",
+    DailyPrice: "",
+    Category: "",
+    Transmission: "",
+    FuelType: "",
+    SeatingCapacity: "",
+    Location: "",
+    Description: "",
+  });
 
-    useEffect(() => {
-        const fetchCar = async () => {
-            try {
-                const res = await axios.get(`${import.meta.env.VITE_GENERAL_API}/api/getCarsById/${id}`,{withCredentials:true});
-                console.log("Fetched car data:", res.data);
-                setInitialValues({
-                    Brand: res.data.Brand || "",
-                    Model: res.data.Model || "",
-                    Year: res.data.Year || "",
-                    DailyPrice: res.data.DailyPrice || "",
-                    Category: res.data.Category || "",
-                    Transmission: res.data.Transmission || "",
-                    FuelType: res.data.FuelType || "",
-                    SeatingCapacity: res.data.SeatingCapacity || "",
-                    Location: res.data.Location || "",
-                    Description: res.data.Description || "",
-                });
-            } catch (error) {
-                toast.error("Failed to fetch car details.");
-            }
-        };
-        fetchCar();
-    }, [id]);
-
-    const handleSubmit = async (values) => {
-        try {
-            await axios.put(`${import.meta.env.VITE_GENERAL_API}/api/updateCar/${id}`, values,{withCredentials:true});
-            toast.success("Car updated successfully!");
-            navigate("/dashboard/manage-car");
-        } catch (error) {
-            toast.error("Failed to update car.");
-        }
+  useEffect(() => {
+    const fetchCar = async () => {
+      try {
+        const res = await axios.get(
+          `${import.meta.env.VITE_GENERAL_API}/api/getCarsById/${id}`,
+          { withCredentials: true }
+        );
+        console.log("Fetched car data:", res.data);
+        setInitialValues({
+          Brand: res.data.Brand || "",
+          Model: res.data.Model || "",
+          Year: res.data.Year || "",
+          DailyPrice: res.data.DailyPrice || "",
+          Category: res.data.Category || "",
+          Transmission: res.data.Transmission || "",
+          FuelType: res.data.FuelType || "",
+          SeatingCapacity: res.data.SeatingCapacity || "",
+          Location: res.data.Location || "",
+          Description: res.data.Description || "",
+        });
+      } catch (error) {
+        toast.error("Failed to fetch car details.");
+      }
     };
+    fetchCar();
+  }, [id]);
+
+  const handleSubmit = async (values) => {
+    try {
+      await axios.put(
+        `${import.meta.env.VITE_GENERAL_API}/api/updateCar/${id}`,
+        values,
+        { withCredentials: true }
+      );
+      toast.success("Car updated successfully!");
+      navigate("/dashboard/manage-car");
+    } catch (error) {
+      toast.error("Failed to update car.");
+    }
+  };
 
   //Yup validation schema
   const EditCarSchema = Yup.object({
@@ -78,7 +85,6 @@ const EditCar = () => {
     Location: Yup.string().required("Location is required"),
     Description: Yup.string().required("Description is required"),
   });
-
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100 p-6">
@@ -157,7 +163,7 @@ const EditCar = () => {
                 <Field
                   type="text"
                   name="DailyPrice"
-                  placeholder="e.g. $50"
+                  placeholder="e.g. ₹1000"
                   className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-indigo-400 outline-none"
                 />
                 <ErrorMessage

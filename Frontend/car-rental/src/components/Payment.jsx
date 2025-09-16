@@ -30,10 +30,12 @@ const Payment = () => {
     }
   };
 
-    const handleOnlinePayment = (e) => {
+  const handleOnlinePayment = (e) => {
     e.preventDefault();
-    navigate('/onlinePayment', { state: { bookingData: bookingDataFromState } });
-    }
+    navigate("/onlinePayment", {
+      state: { bookingData: bookingDataFromState },
+    });
+  };
 
   return (
     <>

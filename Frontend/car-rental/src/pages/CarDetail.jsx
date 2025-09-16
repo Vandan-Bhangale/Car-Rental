@@ -87,7 +87,7 @@ const CarDetail = ({ isLoggedIn, userType }) => {
               <div className="flex flex-col gap-4">
                 <p className="text-xl font-semibold text-gray-800">
                   Price:{" "}
-                  <span className="text-blue-600">${car.DailyPrice}</span> / day
+                  <span className="text-blue-600">₹{car.DailyPrice}</span> / day
                 </p>
                 {isLoggedIn &&
                   (userType?.userType === "guest" ? (

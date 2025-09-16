@@ -50,7 +50,7 @@ const Signup = () => {
           email: "",
           password: "",
           confirmPassword: "",
-          userType: ""
+          userType: "",
         }}
         validationSchema={SignupSchema}
         onSubmit={handleSubmit}
