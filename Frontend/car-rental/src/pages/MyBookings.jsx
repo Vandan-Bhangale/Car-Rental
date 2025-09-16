@@ -69,9 +69,7 @@ const MyBookings = () => {
               <div className="md:w-60 w-full flex-shrink-0">
                 <img
                   className="h-40 w-full object-cover rounded-2xl"
-                  src={`${import.meta.env.VITE_GENERAL_API}/uploads/${
-                    booking.carId?.image
-                  }`}
+                  src={booking.carId?.image}
                   alt={booking.carId?.Brand}
                 />
                 <h2 className="font-bold mt-3 text-center md:text-left">
