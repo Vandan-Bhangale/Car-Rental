@@ -58,10 +58,8 @@ const Cars = ({ userType }) => {
                 {car.image && (
                   <img
                     className="w-full h-40 object-cover"
-                    src={`${import.meta.env.VITE_GENERAL_API}/uploads/${
-                      car.image
-                    }`}
-                    alt={car.title}
+                    src={car.image} // 👈 use directly
+                    alt={car.Brand}
                   />
                 )}
 

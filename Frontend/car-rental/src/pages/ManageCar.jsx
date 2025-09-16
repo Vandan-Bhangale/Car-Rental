@@ -58,14 +58,12 @@ const ManageCar = () => {
             >
               {/* Car Image */}
               {car.image && (
-                <img
-                  className="w-full h-40 object-cover"
-                  src={`${import.meta.env.VITE_GENERAL_API}/uploads/${
-                    car.image
-                  }`}
-                  alt={car.title}
-                />
-              )}
+                  <img
+                    className="w-full h-40 object-cover"
+                    src={car.image} // 👈 use directly
+                    alt={car.Brand}
+                  />
+                )}
 
               {/* Car Details */}
               <div className="p-4">

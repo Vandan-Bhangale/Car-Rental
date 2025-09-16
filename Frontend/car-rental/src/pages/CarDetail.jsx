@@ -41,11 +41,13 @@ const CarDetail = ({ isLoggedIn, userType }) => {
           <>
             {/* Image */}
             <div className="w-full max-w-3xl">
-              <img
-                src={`${import.meta.env.VITE_GENERAL_API}/uploads/${car.image}`}
-                alt={car.title}
-                className="w-full h-[350px] object-cover rounded-2xl shadow-lg"
-              />
+              {car.image && (
+                <img
+                  className="w-full h-[350px] object-cover rounded-2xl shadow-lg"
+                  src={car.image} // 👈 use directly
+                  alt={car.Brand}
+                />
+              )}
             </div>
 
             {/* Text + details aligned left */}
