@@ -134,7 +134,7 @@ const MyBookings = () => {
                 {/* Total Amount */}
                 <p>💰 Total Amount</p>
                 <p className="ml-0 md:ml-6 font-bold text-2xl text-blue-600">
-                  ${booking.totalAmount}
+                  ₹{booking.totalAmount}
                 </p>
               </div>
 
