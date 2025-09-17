@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import Footer from "../components/Footer";
 import { Link } from "react-router-dom";
 
-const Cars = ({ userType }) => {
+const Cars = ({ isLoggedIn,userType }) => {
   const [cars, setCars] = useState([]);
   useEffect(() => {
     try {
@@ -25,7 +25,7 @@ const Cars = ({ userType }) => {
       <div className="px-6 py-10 bg-gray-50 min-h-screen">
         {/* Header */}
         <div className="text-center mb-10">
-          {userType === "guest" ? (
+          {isLoggedIn && userType?.userType === "guest" ? (
             <>
               <h1 className="text-3xl font-bold text-gray-800">
                 Available Cars

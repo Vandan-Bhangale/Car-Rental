@@ -72,7 +72,7 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Signup />} />
           <Route path="/add-car" element={<AddCar />} />
-          <Route path="/cars" element={<Cars />} />
+          <Route path="/cars" element={<Cars userType={userType} isLoggedIn={isLoggedIn}/>} />
           <Route path="/about" element={<About />} />
           <Route
             path="/car-details/:id"
@@ -83,7 +83,7 @@ function App() {
           <Route path="/onlinePayment" element={<OnlinePayment />} />
           <Route path="/dashboard" element={<DashBoardLayout />}>
             <Route index element={<Navigate to="/dashboard/dashboard" />} />
-            <Route path="cars" element={<Cars userType={userType} />} />
+            <Route path="cars" element={<Cars userType={userType} isLoggedIn={isLoggedIn}> </Cars>} />
             <Route path="my-bookings" element={<MyBookings />} />
             <Route path="dashboard" element={<Dashboard />} />
             <Route path="edit-car/:id" element={<EditCar />} />
