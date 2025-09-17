@@ -242,7 +242,7 @@ const AddCar = () => {
                 <Field
                   type="text"
                   name="Location"
-                  placeholder="e.g. New York, Los Angeles"
+                  placeholder="e.g. Vadodara, Mumbai"
                   className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-indigo-400 outline-none"
                 />
                 <ErrorMessage
