@@ -49,10 +49,10 @@ const Cars = ({ isLoggedIn, userType }) => {
     <>
       <div className="px-6 py-10 bg-gray-50 min-h-screen">
         <div className="flex justify-center flex-col items-center mb-10">
-          <h1 data-aos="fade-up" className="text-3xl font-bold text-gray-800">
+          <h1 data-aos="fade-down" className="text-3xl font-bold text-gray-800">
             {heading}
           </h1>
-          <p data-aos="fade-up" className="text-gray-600 mt-2">
+          <p data-aos="fade-down" className="text-gray-600 mt-2">
             {text}
           </p>
         </div>
