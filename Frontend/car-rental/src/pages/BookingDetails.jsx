@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
+import "aos/dist/aos.css";
+import AOS from "aos";
 
 // This is giving error
 const BookingDetails = () => {
@@ -22,8 +24,16 @@ const BookingDetails = () => {
     fetchBookings();
   }, []);
 
+  useEffect(() => {
+    AOS.init({
+      duration: 1000,
+      easing: "ease",
+      once: true,
+    });
+  }, []);
+
   return (
-    <div className="max-w-4xl mx-auto px-4 py-10">
+    <div data-aos="fade-down" className="max-w-4xl mx-auto px-4 py-10">
       <h2 className="text-2xl font-bold mb-6 text-center text-gray-800">
         Bookings Details
       </h2>
@@ -31,7 +41,7 @@ const BookingDetails = () => {
       {bookings.length === 0 ? (
         <p className="text-center text-gray-500">No bookings found.</p>
       ) : (
-        <ul className="space-y-6">
+        <ul data-aos="fade-up" className="space-y-6">
           {bookings.map((booking) => (
             <li
               key={booking._id}

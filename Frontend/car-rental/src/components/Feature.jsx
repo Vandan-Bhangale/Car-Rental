@@ -1,6 +1,8 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import "aos/dist/aos.css";
+import AOS from "aos";
 
 const Featured = () => {
   const [cars, setCars] = useState([]);
@@ -19,13 +21,23 @@ const Featured = () => {
     }
   }, []);
 
+  useEffect(() => {
+    AOS.init({
+      duration: 1000,
+      easing: "ease",
+      once: true,
+    });
+  }, []);
+
   return (
     <>
       <div className="px-6 py-10 bg-gray-50">
         {/* Header */}
         <div className="text-center mb-10">
-          <h1 className="text-3xl font-bold text-gray-800">Featured Cars</h1>
-          <p className="text-gray-600 mt-2">
+          <h1 data-aos="fade-up" className="text-3xl font-bold text-gray-800">
+            Featured Cars
+          </h1>
+          <p data-aos="fade-up" className="text-gray-600 mt-2">
             Browse our selection of premium vehicles available for your next
             adventure.
           </p>
@@ -33,7 +45,10 @@ const Featured = () => {
 
         {/* Car Listing */}
 
-        <div className="max-w-6xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div
+          data-aos="fade-up"
+          className="max-w-6xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"
+        >
           {cars.slice(0, 3).map((car) => (
             <Link to={`/car-details/${car._id}`} key={car._id}>
               <div

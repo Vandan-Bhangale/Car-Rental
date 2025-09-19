@@ -3,7 +3,9 @@ import * as Yup from "yup";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import Cookies from "js-cookie";
+import "aos/dist/aos.css";
+import AOS from "aos";
+import { useEffect } from "react";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -41,6 +43,14 @@ const Login = () => {
     }
   };
 
+  useEffect(() => {
+    AOS.init({
+      duration: 1000,
+      easing: "ease",
+      once: true,
+    });
+  }, []);
+
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-50">
       <Formik
@@ -51,10 +61,15 @@ const Login = () => {
         {({ isSubmitting }) => (
           <Form className="w-full max-w-sm bg-white shadow-md rounded-xl p-6">
             {/* Title */}
-            <h2 className="text-2xl font-bold text-center mb-6">Login</h2>
+            <h2
+              data-aos="fade-down"
+              className="text-2xl font-bold text-center mb-6"
+            >
+              Login
+            </h2>
 
             {/* Email field */}
-            <div className="mb-4">
+            <div data-aos="fade-up" className="mb-4">
               <label
                 htmlFor="email"
                 className="block text-sm font-medium text-gray-700 mb-2"
@@ -76,7 +91,7 @@ const Login = () => {
             </div>
 
             {/* Password field */}
-            <div className="mb-4">
+            <div data-aos="fade-up" className="mb-4">
               <label
                 htmlFor="password"
                 className="block text-sm font-medium text-gray-700 mb-2"
@@ -101,12 +116,13 @@ const Login = () => {
             <button
               type="submit"
               disabled={isSubmitting}
+              data-aos="fade-up"
               className="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition disabled:opacity-50"
             >
               {isSubmitting ? "Logging in..." : "Login"}
             </button>
 
-            <p className="mt-4 text-sm text-center">
+            <p data-aos="fade-up" className="mt-4 text-sm text-center">
               Don't have an account?{" "}
               <a href="/register" className="text-blue-600 hover:underline">
                 Signup

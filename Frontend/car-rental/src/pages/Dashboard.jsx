@@ -1,4 +1,6 @@
 import { useEffect, useState } from "react";
+import "aos/dist/aos.css";
+import AOS from "aos";
 
 const Dashboard = () => {
   const [carCount, setCarCount] = useState(0);
@@ -32,16 +34,31 @@ const Dashboard = () => {
       });
   }, []);
 
+  useEffect(() => {
+    AOS.init({
+      duration: 1000,
+      easing: "ease",
+      once: true,
+    });
+  }, []);
+
   return (
     <>
       <div className="mt-15 md:mt-0">
-        <h2 className="text-2xl font-bold">Admin Dashboard</h2>
-        <p className="text-gray-600 text-sm">
+        <h2 data-aos="fade-down" className="text-2xl font-bold">
+          Admin Dashboard
+        </h2>
+        <p data-aos="fade-down" className="text-gray-600 text-sm">
           Monitor overall performance including total cars, bookings
         </p>
-        <p className="text-gray-600 text-sm">and revenue.</p>
+        <p data-aos="fade-down" className="text-gray-600 text-sm">
+          and revenue.
+        </p>
 
-        <div className="flex flex-col md:flex-row flex-wrap gap-4 mt-4">
+        <div
+          data-aos="fade-right"
+          className="flex flex-col md:flex-row flex-wrap gap-4 mt-4"
+        >
           {/* Total Cars */}
           <div className="flex-1 md:max-w-[196px] p-4 bg-white rounded shadow">
             <p className="inline-block">
@@ -62,7 +79,7 @@ const Dashboard = () => {
             <p className="inline-block">Total Revenue</p>{" "}
             <span className="text-2xl">💵</span>
             <p className="text-xl font-bold mt-1 text-blue-500">
-              ₹  {totalRevenue}
+              ₹ {totalRevenue}
             </p>
           </div>
         </div>

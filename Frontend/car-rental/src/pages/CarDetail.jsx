@@ -2,8 +2,9 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { Link, useParams, useNavigate } from "react-router-dom";
 import Footer from "../components/Footer";
-import { toast } from "react-toastify";
 import BookingForm from "../components/BookingForm";
+import "aos/dist/aos.css";
+import AOS from "aos";
 
 const CarDetail = ({ isLoggedIn, userType }) => {
   const { id } = useParams(); // ✅ gets :id from URL
@@ -26,6 +27,14 @@ const CarDetail = ({ isLoggedIn, userType }) => {
     fetchCar();
   }, [id]);
 
+  useEffect(() => {
+    AOS.init({
+      duration: 1000,
+      easing: "ease",
+      once: true,
+    });
+  }, []);
+
   return (
     <>
       <div className="flex flex-col gap-8 mt-10 px-4 items-center">
@@ -40,7 +49,11 @@ const CarDetail = ({ isLoggedIn, userType }) => {
         {car ? (
           <>
             {/* Image */}
-            <div className="w-full max-w-3xl">
+            <div
+              data-aos="zoom-in"
+              data-aos-duration="500"
+              className="w-full max-w-3xl"
+            >
               {car.image && (
                 <img
                   className="w-full h-[350px] object-cover rounded-2xl shadow-lg"
@@ -51,7 +64,10 @@ const CarDetail = ({ isLoggedIn, userType }) => {
             </div>
 
             {/* Text + details aligned left */}
-            <div className="w-full max-w-3xl flex flex-col items-start gap-6">
+            <div
+              data-aos="fade-up"
+              className="w-full max-w-3xl flex flex-col items-start gap-6"
+            >
               <div>
                 <h2 className="text-3xl font-bold mb-1">
                   {car.Brand} / {car.Model}

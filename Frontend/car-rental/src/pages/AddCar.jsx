@@ -3,6 +3,9 @@ import * as Yup from "yup";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import "aos/dist/aos.css";
+import AOS from "aos";
+import { useEffect } from "react";
 
 const AddCar = () => {
   const navigate = useNavigate();
@@ -62,12 +65,23 @@ const AddCar = () => {
     }
   };
 
+  useEffect(() => {
+    AOS.init({
+      duration: 1000,
+      easing: "ease",
+      once: true,
+    });
+  }, []);
+
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100 p-6">
       <div className="w-full max-w-3xl bg-white shadow-xl rounded-2xl p-8">
-        <h2 className="text-2xl font-bold text-gray-800 mb-6 text-center">
+        <h2
+          data-aos="fade-down"
+          className="text-2xl font-bold text-gray-800 mb-6 text-center"
+        >
           Add Car
-        </h2>   
+        </h2>
 
         <Formik
           initialValues={{
@@ -89,7 +103,10 @@ const AddCar = () => {
           }}
         >
           {({ setFieldValue }) => (
-            <Form className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <Form
+              data-aos="zoom-in"
+              className="grid grid-cols-1 md:grid-cols-2 gap-6"
+            >
               {/* Brand */}
               <div>
                 <label className="block text-gray-700 font-medium mb-1">

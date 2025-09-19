@@ -1,3 +1,7 @@
+import 'aos/dist/aos.css'; 
+import AOS from "aos";
+import { useEffect } from "react";
+
 const testimonials = [
   {
     id: 1,
@@ -26,13 +30,20 @@ const testimonials = [
 ];
 
 const Testimonials = () => {
+  useEffect(() => {
+      AOS.init ({
+        duration: 1000,
+        easing: "ease",
+        once: true
+      })
+    },[])
   return (
     <section className="bg-gray-50 py-16 px-6">
-      <h2 className="text-3xl font-bold text-center text-gray-900 mb-12">
+      <h2 data-aos="fade-up" className="text-3xl font-bold text-center text-gray-900 mb-12">
         What Our Customers Say
       </h2>
 
-      <div className="grid gap-8 md:grid-cols-3 max-w-6xl mx-auto">
+      <div data-aos="fade-up" className="grid gap-8 md:grid-cols-3 max-w-6xl mx-auto">
         {testimonials.map((testimonial) => (
           <div
             key={testimonial.id}

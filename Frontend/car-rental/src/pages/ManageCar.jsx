@@ -3,6 +3,8 @@ import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { MdDelete } from "react-icons/md";
 import { toast } from "react-toastify";
+import "aos/dist/aos.css";
+import AOS from "aos";
 
 const ManageCar = () => {
   const [cars, setCars] = useState([]);
@@ -24,6 +26,14 @@ const ManageCar = () => {
     }
   }, []);
 
+  useEffect(() => {
+    AOS.init({
+      duration: 1000,
+      easing: "ease",
+      once: true,
+    });
+  }, []);
+
   //Delete car function
   const deleteCar = async (carId) => {
     try {
@@ -40,7 +50,7 @@ const ManageCar = () => {
 
   return (
     <>
-      <div className="max-w-6xl py-10 mx-auto px-4">
+      <div data-aos="fade-down" className="max-w-6xl py-10 mx-auto px-4">
         <h1 className="text-3xl font-bold text-gray-800 text-center">
           Manage My Cars
         </h1>
@@ -49,7 +59,7 @@ const ManageCar = () => {
         </p>
       </div>
 
-      <div className="max-w-6xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div data-aos="fade-up" className="max-w-6xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         {cars.slice(0, 6).map((car) => (
           <Link to={`/car-details/${car._id}`} key={car._id}>
             <div
@@ -58,12 +68,12 @@ const ManageCar = () => {
             >
               {/* Car Image */}
               {car.image && (
-                  <img
-                    className="w-full h-40 object-cover"
-                    src={car.image} // 👈 use directly
-                    alt={car.Brand}
-                  />
-                )}
+                <img
+                  className="w-full h-40 object-cover"
+                  src={car.image} // 👈 use directly
+                  alt={car.Brand}
+                />
+              )}
 
               {/* Car Details */}
               <div className="p-4">

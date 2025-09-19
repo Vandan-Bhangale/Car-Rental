@@ -2,8 +2,10 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import Footer from "../components/Footer";
 import { Link } from "react-router-dom";
+import "aos/dist/aos.css";
+import AOS from "aos";
 
-const Cars = ({ isLoggedIn,userType }) => {
+const Cars = ({ isLoggedIn, userType }) => {
   const [cars, setCars] = useState([]);
   useEffect(() => {
     try {
@@ -20,34 +22,48 @@ const Cars = ({ isLoggedIn,userType }) => {
     }
   }, []);
 
+  useEffect(() => {
+    AOS.init({
+      duration: 1000,
+      easing: "ease",
+      once: true,
+    });
+  }, []);
+
+  let heading = "";
+  let text = "";
+
+  if (!isLoggedIn) {
+    heading = "Search Cars";
+    text = "Explore our collection and find your perfect ride.";
+  } else if (userType?.userType === "guest") {
+    heading = "Available Cars";
+    text =
+      "Browse our selection of premium vehicles available for your next adventure.";
+  } else {
+    heading = "My Cars";
+    text = "Track and manage your registered vehicles.";
+  }
+
   return (
     <>
       <div className="px-6 py-10 bg-gray-50 min-h-screen">
-        {/* Header */}
-        <div className="text-center mb-10">
-          {isLoggedIn && userType?.userType === "guest" ? (
-            <>
-              <h1 className="text-3xl font-bold text-gray-800">
-                Available Cars
-              </h1>
-              <p className="text-gray-600 mt-2">
-                Browse our selection of premium vehicles available for your next
-                adventure.
-              </p>
-            </>
-          ) : (
-            <>
-              <h1 className="text-3xl font-bold text-gray-800">My Cars</h1>
-              <p className="text-gray-600 mt-2">
-                Track and manage your registered vehicles.
-              </p>
-            </>
-          )}
+        <div className="flex justify-center flex-col items-center mb-10">
+          <h1 data-aos="fade-up" className="text-3xl font-bold text-gray-800">
+            {heading}
+          </h1>
+          <p data-aos="fade-up" className="text-gray-600 mt-2">
+            {text}
+          </p>
         </div>
 
         {/* Car Listing */}
 
-        <div className="max-w-6xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div
+          data-aos="fade-up"
+          data-aos-duration="2000"
+          className="max-w-6xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"
+        >
           {cars.slice(0, 6).map((car) => (
             <Link to={`/car-details/${car._id}`} key={car._id}>
               <div

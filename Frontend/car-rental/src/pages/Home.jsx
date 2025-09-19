@@ -3,10 +3,10 @@ import Footer from "../components/Footer";
 import Hero from "../components/Hero";
 import Testimonials from "../components/Review";
 
-const Home = ({ userType }) => {
+const Home = ({ userType, isLoggedIn }) => {
   return (
     <>
-      <Hero userType={userType}></Hero>
+      <Hero userType={userType} isLoggedIn={isLoggedIn}></Hero>
       <Featured></Featured>
       <Testimonials></Testimonials>
       <Footer></Footer>

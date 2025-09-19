@@ -1,14 +1,24 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { HiMenu, HiX } from "react-icons/hi";
+import 'aos/dist/aos.css';
+import AOS from 'aos';
 
 const SideBar = () => {
   const [isOpen, setIsOpen] = useState(false);
 
+  useEffect(() => {
+        AOS.init({
+          duration: 1000,
+          easing: "ease",
+          once: true
+        })
+      },[]);
+
   return (
     <>
       {/* Hamburger toggle - below navbar */}
-      <div className="md:hidden fixed top-16 left-0 w-full z-30 bg-white shadow-sm px-4 py-2 flex justify-between items-center">
+      <div data-aos="fade-down" data-aos-duration="500" className="md:hidden fixed top-16 left-0 w-full z-30 bg-white shadow-sm px-4 py-2 flex justify-between items-center">
         <h2 className="text-lg font-semibold text-gray-800">Dashboard Menu</h2>
         <button onClick={() => setIsOpen(true)}>
           <HiMenu className="text-2xl text-gray-700" />
@@ -16,7 +26,7 @@ const SideBar = () => {
       </div>
 
       {/* Desktop Sidebar */}
-      <div className="hidden md:flex fixed top-16 left-0 w-64 h-[calc(100vh-64px)] bg-white border-r border-r-gray-400 shadow-md z-20 flex-col">
+      <div data-aos="fade-down" className="hidden md:flex fixed top-16 left-0 w-64 h-[calc(100vh-64px)] bg-white border-r border-r-gray-400 shadow-md z-20 flex-col">
         <div className="p-6 border-b border-b-gray-400">
           <h2 className="text-2xl font-semibold text-gray-800">Dashboard</h2>
         </div>

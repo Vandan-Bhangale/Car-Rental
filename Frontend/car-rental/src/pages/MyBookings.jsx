@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import NoBookings from "../components/NoBookings";
 import { FiTrash2 } from "react-icons/fi"; // Import the cancel icon
+import "aos/dist/aos.css";
+import AOS from "aos";
 
 const MyBookings = () => {
   const [bookings, setBookings] = useState([]);
@@ -32,6 +34,14 @@ const MyBookings = () => {
     fetchBookings();
   }, []);
 
+  useEffect(() => {
+    AOS.init({
+      duration: 1000,
+      easing: "ease",
+      once: true,
+    });
+  }, []);
+
   const handleCancel = async (bookingId) => {
     try {
       console.log("Attempting to cancel booking with ID:", bookingId);
@@ -50,8 +60,16 @@ const MyBookings = () => {
   return (
     <>
       <div>
-        <h1 className="text-2xl font-bold ml-4 mt-10 md:ml-10">My Bookings</h1>
-        <p className="text-lg text-gray-500 mb-4 ml-4 md:ml-10">
+        <h1
+          data-aos="fade-up"
+          className="text-2xl font-bold ml-4 mt-10 md:ml-10"
+        >
+          My Bookings
+        </h1>
+        <p
+          data-aos="fade-up"
+          className="text-lg text-gray-500 mb-4 ml-4 md:ml-10"
+        >
           View and Manage your bookings here.
         </p>
       </div>
@@ -59,7 +77,7 @@ const MyBookings = () => {
       {bookings.length === 0 ? (
         <NoBookings />
       ) : (
-        <div className="flex flex-col items-center">
+        <div data-aos="fade-right" className="flex flex-col items-center">
           {bookings.map((booking) => (
             <div
               key={booking._id}

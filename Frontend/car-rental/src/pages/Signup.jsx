@@ -3,6 +3,9 @@ import * as Yup from "yup";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import 'aos/dist/aos.css';
+import AOS from "aos"
+import { useEffect } from "react";
 
 const Signup = () => {
   const navigate = useNavigate();
@@ -42,6 +45,14 @@ const Signup = () => {
     }
   };
 
+  useEffect(() => {
+    AOS.init({
+      duration:1000,
+      easing:"ease",
+      once:true
+    })
+  },[]);
+
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-50">
       <Formik
@@ -58,10 +69,10 @@ const Signup = () => {
         {({ isSubmitting }) => (
           <Form className="w-full max-w-sm bg-white shadow-md rounded-xl p-6">
             {/* Title */}
-            <h2 className="text-2xl font-bold text-center mb-6">Signup</h2>
+            <h2 data-aos="fade-down" className="text-2xl font-bold text-center mb-6">Signup</h2>
 
             {/* Name field */}
-            <div className="mb-4">
+            <div data-aos="fade-up" className="mb-4">
               <label
                 htmlFor="name"
                 className="block text-sm font-medium text-gray-700 mb-2"
@@ -83,7 +94,7 @@ const Signup = () => {
             </div>
 
             {/* Email field */}
-            <div className="mb-4">
+            <div data-aos="fade-up" className="mb-4">
               <label
                 htmlFor="email"
                 className="block text-sm font-medium text-gray-700 mb-2"
@@ -105,7 +116,7 @@ const Signup = () => {
             </div>
 
             {/* Password field */}
-            <div className="mb-4">
+            <div data-aos="fade-up" className="mb-4">
               <label
                 htmlFor="password"
                 className="block text-sm font-medium text-gray-700 mb-2"
@@ -127,7 +138,7 @@ const Signup = () => {
             </div>
 
             {/* Confirm Password field */}
-            <div className="mb-4">
+            <div data-aos="fade-up" className="mb-4">
               <label
                 htmlFor="confirmPassword"
                 className="block text-sm font-medium text-gray-700 mb-2"
@@ -149,7 +160,7 @@ const Signup = () => {
             </div>
 
             {/* User Type (Radio Buttons) */}
-            <div className="mb-4">
+            <div data-aos="fade-up" className="mb-4">
               <span className="block text-sm font-medium text-gray-700 mb-2">
                 User Type
               </span>
@@ -184,12 +195,13 @@ const Signup = () => {
             <button
               type="submit"
               disabled={isSubmitting}
+              data-aos="fade-up"
               className="w-full bg-green-600 text-white py-2 rounded-lg hover:bg-green-700 transition disabled:opacity-50"
             >
               {isSubmitting ? "Signing up..." : "Signup"}
             </button>
 
-            <p className="mt-4 text-sm text-center">
+            <p data-aos="fade-up" className="mt-4 text-sm text-center">
               Already have an account?{" "}
               <a href="/Login" className="text-blue-600 hover:underline">
                 Login
