@@ -17,7 +17,25 @@ const userSchema = new mongoose.Schema({
         type:String,
         enum: ['guest', 'owner'],
         required: true
+    },
+    time: {
+        type : Date,
+        default: Date.now
+    },
+    localTime: {
+    type: String,
+    default: () => {
+      // Store local time as string when user signs up
+      return new Date().toLocaleString('en-IN', {
+        year: 'numeric',
+        month: 'short',
+        day: 'numeric',
+        hour: 'numeric',
+        minute: 'numeric',
+        hour12: true
+      });
     }
+  }
 });
 
 const User = mongoose.model('User', userSchema);
