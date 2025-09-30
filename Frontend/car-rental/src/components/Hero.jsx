@@ -30,8 +30,8 @@ const Hero = ({ userType, isLoggedIn }) => {
           >
             Affordable hourly & daily rentals with no hidden charges.
           </p>
-          {!userType && (
-            <Link
+          {userType?.userType !== "owner" && (
+              <Link
               to="/cars"
               data-aos="fade-up"
               className="mt-6 inline-block px-6 py-3 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg shadow-lg"
@@ -39,7 +39,7 @@ const Hero = ({ userType, isLoggedIn }) => {
               Search Cars
             </Link>
           )}
-          {isLoggedIn && userType?.userType === "owner" && (
+          {userType?.userType === "owner" && (
             <Link
               to="/add-car"
               className="mt-6 inline-block px-6 py-3 bg-indigo-600 hover:bg-indigo-700 text-white rounded-lg shadow-lg"

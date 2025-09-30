@@ -121,8 +121,7 @@ exports.getTotalRevenue = async (req, res) => {
   }
 };
 
-//Fetching the total bookings for the specified owner
-// This is giving error
+//Fetching the booking details for the specified owner
 exports.getBookingDetails = async (req, res) => {
   try {
     const ownerId = req.session.userId; // Assuming owner is logged in

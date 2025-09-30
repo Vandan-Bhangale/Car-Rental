@@ -5,10 +5,12 @@ import Cookies from "js-cookie";
 import { toast } from "react-toastify";
 import { useState } from "react";
 import { HiMenu, HiX } from "react-icons/hi"; // Icons for menu toggle
+import Profile from "./Profile";
 
 const NavBar = ({ setIsLoggedIn, isLoggedIn, userType, setUserType }) => {
   const navigate = useNavigate();
   const [menuOpen, setMenuOpen] = useState(false); // Mobile menu toggle
+  const [showProfile, setShowProfile] = useState(false);
 
   const handleLogout = async () => {
     try {
@@ -46,6 +48,7 @@ const NavBar = ({ setIsLoggedIn, isLoggedIn, userType, setUserType }) => {
       </Link>
 
       {/* Hamburger menu for mobile */}
+
       <div className="md:hidden">
         <button
           onClick={toggleMenu}
@@ -57,7 +60,7 @@ const NavBar = ({ setIsLoggedIn, isLoggedIn, userType, setUserType }) => {
 
       {/* Nav Links (Desktop) */}
       <div className="hidden md:flex gap-8">
-        <NavLinks />
+        <NavLinks isLoggedIn={isLoggedIn} setShowProfile={setShowProfile} showProfile={showProfile}/>
       </div>
 
       {/* Auth Buttons (Desktop) */}
@@ -88,7 +91,7 @@ const NavBar = ({ setIsLoggedIn, isLoggedIn, userType, setUserType }) => {
 };
 
 // Reusable NavLinks component
-const NavLinks = ({ onClick }) => (
+const NavLinks = ({ onClick,isLoggedIn,setShowProfile,showProfile }) => (
   <>
     <Link
       to="/"
@@ -111,6 +114,19 @@ const NavLinks = ({ onClick }) => (
     >
       About
     </Link>
+    {isLoggedIn && (
+      <button
+        onClick={() => {
+          setShowProfile(true);
+        }}
+        className="text-gray-600 hover:text-blue-600 font-medium transition-colors duration-200"
+      >
+        Profile
+      </button>
+    )}
+
+    {/* Render the modal inside Navbar */}
+      {showProfile && <Profile setShowProfile={setShowProfile} />}
   </>
 );
 
