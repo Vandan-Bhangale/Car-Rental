@@ -57,7 +57,10 @@ exports.createBooking = async (req, res) => {
 //Remaining this functionality to be tested
 exports.getUserBookings = async (req, res) => {
   try {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
     const bookings = await BookingModel.find({
+      endDate: {$gte:today},
       userId: req.session.userId,
     }).populate({
       path: "carId",
