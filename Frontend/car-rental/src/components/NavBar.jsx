@@ -75,7 +75,7 @@ const NavBar = ({ setIsLoggedIn, isLoggedIn, userType, setUserType }) => {
       {/* Mobile Menu Dropdown */}
       {menuOpen && (
         <div className="absolute top-20 left-0 w-full bg-white shadow-md flex flex-col items-start px-6 py-4 md:hidden z-40 gap-4">
-          <NavLinks onClick={toggleMenu} />
+          <NavLinks onClick={toggleMenu} showProfile={showProfile} setShowProfile={setShowProfile} isLoggedIn={isLoggedIn}/>
           <ActionButtons
             userType={userType}
             isLoggedIn={isLoggedIn}
