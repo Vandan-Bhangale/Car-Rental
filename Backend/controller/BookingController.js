@@ -1,6 +1,10 @@
 const BookingModel = require("../Models/BookingModel");
 const CarModel = require("../Models/CarModel");
 const mongoose = require("mongoose");
+const Stripe = require("stripe");
+require("dotenv").config();
+
+const stripe = new Stripe(process.env.STRIPE_API);
 
 exports.createBooking = async (req, res) => {
   try {
@@ -60,7 +64,7 @@ exports.getUserBookings = async (req, res) => {
     const today = new Date();
     today.setHours(0, 0, 0, 0);
     const bookings = await BookingModel.find({
-      endDate: {$gte:today},
+      endDate: { $gte: today },
       userId: req.session.userId,
     }).populate({
       path: "carId",
@@ -152,5 +156,32 @@ exports.getBookingDetails = async (req, res) => {
   } catch (error) {
     console.error("Error fetching booking details:", error);
     res.status(500).json({ message: "Server error", error });
+  }
+};
+
+exports.payment = async (req, res) => {
+  try {
+    const { amount } = req.body;
+    const session = await stripe.checkout.sessions.create({
+      payment_method_types: ["card"],
+      line_items: [
+        {
+          price_data: {
+            currency: "inr",
+            product_data: {
+              name: "myBooking",
+            },
+            unit_amount: amount * 100,
+          },
+          quantity: 1,
+        },
+      ],
+      mode: "payment",
+      success_url: "http://localhost:5173/success",
+      cancel_url: "http://localhost:5173/cancel",
+    });
+    res.json({ url: session.url });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
   }
 };
