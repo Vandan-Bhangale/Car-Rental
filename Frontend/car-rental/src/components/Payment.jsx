@@ -2,10 +2,14 @@ import { useLocation } from "react-router-dom";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import { useState } from "react";
+
 const Payment = () => {
   const { state } = useLocation();
   const navigate = useNavigate();
+  const [loading,setLoading] = useState(false);
   const bookingDataFromState = state?.bookingData || {};
+  const { totalAmount } = state;
 
   const handleCashPayment = async (e) => {
     e.preventDefault();
@@ -30,11 +34,37 @@ const Payment = () => {
     }
   };
 
-  const handleOnlinePayment = (e) => {
+  const handleOnlinePayment = async (e) => {
     e.preventDefault();
-    navigate("/onlinePayment", {
-      state: { bookingData: bookingDataFromState },
-    });
+    setLoading(true);
+    const storedUser = JSON.parse(localStorage.getItem("user"));
+    const userId = storedUser?.id;   //Taking out userId from localstorage to save it on DB
+
+    try {
+      const bookingData = {
+        ...bookingDataFromState,
+        userId: userId,
+        totalAmount: totalAmount,     //Saving amount because stripe is redirecting so it can be vanished
+        paymentMethod: "Online",
+        paymentStatus: "Completed",
+        bookingStatus: "Booked",
+      };
+
+      localStorage.setItem("bookingData", JSON.stringify(bookingData));   //Storing bookingdata because stripe is
+                                                                          //Redirecting
+
+      const response = await axios.post(
+        `${import.meta.env.VITE_GENERAL_API}/api/payment`,
+        { amount: totalAmount },
+        { withCredentials: true }
+      );
+
+      if (response && response.status === 200) {
+        window.location.href = response.data.url;
+      }
+    } catch (err) {
+      console.log("Error while making payment.", err);
+    }
   };
 
   return (
@@ -44,10 +74,12 @@ const Payment = () => {
         <p className="mb-6 text-gray-600">Please choose your payment method:</p>
 
         <button
-          className="w-full bg-blue-600 text-white py-3 rounded-lg shadow hover:bg-blue-700 transition mb-4"
+          className={`w-full bg-blue-600 text-white py-3 rounded-lg shadow hover:bg-blue-700 transition mb-4
+                       ${loading ? "opacity-50 cursor-not-allowed" : "cursor-pointer"}`}
           onClick={handleOnlinePayment}
-        >
-          Pay Now
+          disabled={loading}
+        > 
+          {loading ? "Processing..." : "Pay Now"} 
         </button>
 
         <p className="text-gray-500 mb-4">or</p>

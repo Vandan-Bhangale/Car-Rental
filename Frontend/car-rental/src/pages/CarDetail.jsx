@@ -10,7 +10,7 @@ const CarDetail = ({ isLoggedIn, userType }) => {
   const { id } = useParams(); // ✅ gets :id from URL
   const [car, setCar] = useState(null);
   const [showBookingForm, setShowBookingForm] = useState(false);
-  const navigate = useNavigate();
+  const navigate = useNavigate();   
 
   useEffect(() => {
     const fetchCar = async () => {
@@ -57,7 +57,7 @@ const CarDetail = ({ isLoggedIn, userType }) => {
               {car.image && (
                 <img
                   className="w-full h-[350px] object-cover rounded-2xl shadow-lg"
-                  src={car.image} // 👈 use directly
+                  src={car.image} // use directly
                   alt={car.Brand}
                 />
               )}
@@ -133,6 +133,7 @@ const CarDetail = ({ isLoggedIn, userType }) => {
 
       {showBookingForm && (
         <BookingForm
+          car={car}
           showBookingForm={showBookingForm}
           setShowBookingForm={setShowBookingForm}
         />

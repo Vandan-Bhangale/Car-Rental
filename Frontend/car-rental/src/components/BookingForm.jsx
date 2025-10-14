@@ -1,9 +1,9 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 import { Link, useParams,useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
-const BookingForm = ({ setShowBookingForm }) => {
+const BookingForm = ({ setShowBookingForm,car }) => {
   //The variable name 'id' in useParams should match the parameter name defined in your route in frontend.
   const { id } = useParams();      
   const navigate = useNavigate();
@@ -12,13 +12,25 @@ const BookingForm = ({ setShowBookingForm }) => {
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
   const [location, setLocation] = useState("");
+  const [totalAmount,setTotalAmount] = useState(0);
+
+   useEffect(() => {
+    if (startDate && endDate) {
+      const start = new Date(startDate);
+      const end = new Date(endDate);
+      const days = Math.ceil((end - start) / (1000 * 60 * 60 * 24));
+
+      if (days > 0) setTotalAmount(days * car.DailyPrice);
+      else setTotalAmount(0);
+    }
+  }, [startDate, endDate, car.DailyPrice]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       const bookingData = { name, startDate, endDate, location, carId: id };
       console.log("Booking Data:", bookingData); // Log the booking data to be sent
-      navigate('/payment', { state: { bookingData } });
+      navigate('/payment', { state: { bookingData,totalAmount } });
       setShowBookingForm(false);
     } catch (error) {
       console.error("Error during booking:", error);

@@ -24,6 +24,8 @@ import EditCar from "./pages/EditCar";
 import ManageCar from "./pages/ManageCar";
 import BookingDetails from "./pages/BookingDetails";
 import About from "./pages/About";
+import Success from "./pages/Success";
+import Cancel from "./pages/Cancel";
 
 function App() {
   const [user, setUser] = useState(null);
@@ -75,6 +77,8 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Signup />} />
           <Route path="/add-car" element={<AddCar />} />
+          <Route path="/success" element={<Success />} />
+          <Route path="/cancel" element={<Cancel />} />
           <Route
             path="/cars"
             element={<Cars userType={userType} isLoggedIn={isLoggedIn} />}
