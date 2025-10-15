@@ -1,36 +1,53 @@
-# 🚗 Car Rental Website  
+### 🚗 Car Rental Website
 
-A full-stack **Car Rental Platform** built using the **MERN stack** (MongoDB, Express.js, React.js, Node.js). This website allows customers to browse available cars, book rentals online, and manage their bookings, while owners/admins can manage cars, pricing, and revenue through an integrated dashboard.
-
----
-
-## 📌 Features  
-
-### 🔹 For Customers  
-- View available cars with details (brand, model, price, availability).  
-- Search, filter, and sort cars based on requirements.  
-- Book a car online with secure login.  
-- Manage bookings from “My Bookings” page.  
-
-### 🔹 For Owners/Admins  
-- Add, edit, and delete car listings.  
-- View all bookings made by customers.  
-- Manage pricing, availability, and revenue.  
-- Dashboard with analytics (future enhancement).  
-
-### 🔹 General  
-- Fully responsive UI using **React + Tailwind CSS**.  
-- Secure authentication using **Cookies/Session**.  
-- REST API built with **Express.js** and **MongoDB**.  
-- Deployed on Vercel & Render.  
+A full-stack Car Rental Platform built using the MERN stack (MongoDB, Express.js, React.js, Node.js).
+This website allows customers to browse available cars, book rentals online with secure payments, and manage their bookings, while owners or admins can manage cars, pricing, and bookings through an integrated dashboard.
 
 ---
 
-## 🛠️ Tech Stack  
+## 📌 Features
+
+#### 🔹 For Customers
+
+- View available cars with details such as brand, model, price, and availability.
+
+- Book cars online using Stripe payment gateway or choose cash payment.
+
+- View and manage bookings in the My Bookings section.
+
+- View and edit personal details from the Profile page.
+
+#### 🔹 For Owners/Admins
+
+- Add, edit, and delete car listings.
+
+- View all customer bookings in real time.
+
+- Manage car pricing, availability, and revenue.
+
+- Dashboard with analytics (coming soon).
+
+#### 🔹 General
+
+- Fully responsive user interface built with React and Tailwind CSS.
+
+- Secure authentication using Cookies and Sessions.
+
+- RESTful API built with Express.js and MongoDB.
+
+- Image upload and storage using Cloudinary.
+
+- Online payments handled securely with Stripe (test mode).
+
+- Frontend deployed on Vercel and backend on Render.
+
+--- 
+
+### 🛠️ Tech Stack  
 
 | Frontend | Backend | Database | Others |
-|----------|----------|----------|--------|
-| React.js | Node.js  | MongoDB  | Tailwind CSS, Cookies-session|
+|-----------|----------|-----------|--------|
+| React.js  | Node.js  | MongoDB   | Tailwind CSS, Cloudinary, Cookies-Session, Stripe |
 
 ---
 
