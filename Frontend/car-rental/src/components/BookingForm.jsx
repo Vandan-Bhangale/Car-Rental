@@ -8,7 +8,7 @@ const BookingForm = ({ setShowBookingForm,car }) => {
   const { id } = useParams();      
   const navigate = useNavigate();
 
-  const [name, setName] = useState("");
+  // const [name, setName] = useState("");
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
   const [location, setLocation] = useState("");
@@ -51,13 +51,13 @@ const BookingForm = ({ setShowBookingForm,car }) => {
           {/* Booking form goes here */}
           <h2 className="text-xl font-bold mb-4">Book This Car</h2>
           <form onSubmit={handleSubmit} className="space-y-4">
-            <input
+            {/* <input
               type="text"
               placeholder="Your Name"
               onChange={(e) => setName(e.target.value)}
               value={name}
               className="border p-2 w-full rounded"
-            />
+            /> */}
             <input
               type="date"
               placeholder="Start Date"
