@@ -6,24 +6,24 @@ import AOS from "aos";
 
 const Featured = () => {
   const [cars, setCars] = useState([]);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
+  const [loading,setLoading] = useState(true);
+  
+ useEffect(() => {
+  const fetchCars = async () => {
     try {
-      const fetchCars = async () => {
-        const response = await axios.get(
-          `${import.meta.env.VITE_GENERAL_API}/api/getCars`
-        );
-        setCars(response.data);
-        // console.log("Fetched cars:", response.data);
-      };
-      fetchCars();
+      const response = await axios.get(
+        `${import.meta.env.VITE_GENERAL_API}/api/getCars`
+      );
+      setCars(response.data);
     } catch (error) {
       console.error("Error fetching cars:", error);
     } finally {
       setLoading(false);
     }
-  }, []);
+  };
+
+  fetchCars();
+}, []);
 
   useEffect(() => {
     AOS.init({
