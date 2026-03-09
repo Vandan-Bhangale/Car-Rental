@@ -31,6 +31,8 @@ const Login = () => {
 
       if (response.data.message === "Login successful") {
         toast.success("Login Successful");
+        console.log(response.data);
+        //* Storing user Id,email and userType in localstorage to display user specific options in UI
         localStorage.setItem("user", JSON.stringify(response.data.user));
         navigate("/");
         window.location.reload();

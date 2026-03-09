@@ -8,6 +8,7 @@ const mongodbStore = require("connect-mongodb-session")(session);
 const userRoutes = require("./Routes/userRoute");
 const carRoutes = require("./Routes/CarRoutes");
 const BoookingRoutes = require("./Routes/BookingRoutes");
+const authRoutes = require("./Routes/authRoutes");
 
 const app = express();
 
@@ -21,37 +22,38 @@ const store = new mongodbStore({
   collection: "sessions",
 });
 
-app.set("trust proxy", 1);  // trust first proxy (Render/Heroku/etc.)
+// app.set("trust proxy", 1);  // trust first proxy (Render/Heroku/etc.)
 
 //Session for localhost
-// app.use(
-//   session({
-//     secret: process.env.SESSION_SECRET,
-//     resave: false,
-//     saveUninitialized: false,
-//     store: store,
-//     cookie: {
-//       httpOnly: true,
-//       secure: false,
-//       maxAge: 1000 * 60 * 60 * 24, // 1 day
-//     },
-//   })
-// );
+app.use(
+  session({
+    secret: process.env.SESSION_SECRET,
+    resave: false,
+    saveUninitialized: false,
+    store: store,
+    cookie: {
+      httpOnly: true,
+      secure: false,
+      maxAge: 1000 * 60 * 60 * 24, // 1 day
+    },
+  })
+);
 
 // This session is for deployed version on render and vercel
-app.use(session({
-  secret: process.env.SESSION_SECRET,
-  resave: false,
-  saveUninitialized: false,
-  cookie: {
-    httpOnly: true,
-    secure: true,
-    sameSite: "none",
-    maxAge: 24 * 60 * 60 * 1000
-  },
-  store
-}));
+// app.use(session({
+//   secret: process.env.SESSION_SECRET,
+//   resave: false,
+//   saveUninitialized: false,
+//   cookie: {
+//     httpOnly: true,
+//     secure: true,
+//     sameSite: "none",
+//     maxAge: 24 * 60 * 60 * 1000
+//   },
+//   store
+// }));
 
+app.use("/api",authRoutes)
 app.use("/api", userRoutes);
 app.use("/api", carRoutes);
 app.use("/api", BoookingRoutes);

@@ -3,14 +3,16 @@ import logo from "../assets/logo.webp";
 import axios from "axios";
 import Cookies from "js-cookie";
 import { toast } from "react-toastify";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { HiMenu, HiX } from "react-icons/hi"; // Icons for menu toggle
 import Profile from "./Profile";
+import { AuthContext } from "../context/authContext";
 
-const NavBar = ({ setIsLoggedIn, isLoggedIn, userType, setUserType }) => {
+const NavBar = () => {
   const navigate = useNavigate();
   const [menuOpen, setMenuOpen] = useState(false); // Mobile menu toggle
   const [showProfile, setShowProfile] = useState(false);
+  const { setIsLoggedIn,isLoggedIn,userType,setUserType} = useContext(AuthContext);
 
   const handleLogout = async () => {
     try {

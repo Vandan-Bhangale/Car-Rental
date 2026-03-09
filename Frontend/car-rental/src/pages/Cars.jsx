@@ -1,12 +1,15 @@
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import Footer from "../components/Footer";
 import { Link } from "react-router-dom";
 import "aos/dist/aos.css";
 import AOS from "aos";
+import { AuthContext } from "../context/authContext";
 
-const Cars = ({ isLoggedIn, userType }) => {
+const Cars = () => {
   const [cars, setCars] = useState([]);
+  const {isLoggedIn,userType} = useContext(AuthContext);
+
   useEffect(() => {
     try {
       const fetchCars = async () => {
