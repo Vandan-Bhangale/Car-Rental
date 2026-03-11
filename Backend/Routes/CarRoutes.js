@@ -9,5 +9,6 @@ Router.get('/getCarsById/:id', CarController.getCarsById);
 Router.get('/carCount', CarController.getCarCount);
 Router.put('/updateCar/:id', CarController.updateCar);
 Router.delete('/deleteCar/:id', CarController.deleteCar);
+Router.get('/owner/cars',CarController.getOwnerCar);
 
 module.exports = Router;

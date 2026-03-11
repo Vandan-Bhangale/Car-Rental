@@ -25,6 +25,7 @@ import BookingDetails from "./pages/BookingDetails";
 import About from "./pages/About";
 import Success from "./pages/Success";
 import Cancel from "./pages/Cancel";
+import OwnerCar from "./components/OwnerCar";
 
 function App() {
   return (
@@ -54,7 +55,7 @@ function App() {
           <Route path="/dashboard" element={<DashBoardLayout />}>
             <Route index element={<Navigate to="/dashboard/dashboard" />} />
 
-            <Route path="cars" element={<Cars />} />
+            <Route path="cars" element={<OwnerCar />} />
             <Route path="my-bookings" element={<MyBookings />} />
             <Route path="dashboard" element={<Dashboard />} />
             <Route path="edit-car/:id" element={<EditCar />} />

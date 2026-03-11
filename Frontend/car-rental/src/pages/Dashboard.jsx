@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import "aos/dist/aos.css";
 import AOS from "aos";
+import axios from "axios";
 
 const Dashboard = () => {
   const [carCount, setCarCount] = useState(0);
@@ -9,12 +10,18 @@ const Dashboard = () => {
 
   // Fetch car count from backend
   useEffect(() => {
-    fetch(`${import.meta.env.VITE_GENERAL_API}/api/carCount`)
-      .then((response) => response.json())
-      .then((data) => {
-        setCarCount(data.count);
-      });
-  }, []);
+    const getCarCount = async () => {
+      try {
+        const response = await axios.get(`${import.meta.env.VITE_GENERAL_API}/api/carCount`,{withCredentials:true});
+        console.log(response.data.count);
+        
+        setCarCount(response.data.count);
+      } catch (err) {
+        console.log('Error while gettnig car count: ',err);
+      }
+    }
+    getCarCount();
+  },[])
 
   // Fetch booking count from backend
   useEffect(() => {
