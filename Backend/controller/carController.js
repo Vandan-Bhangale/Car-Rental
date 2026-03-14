@@ -29,6 +29,7 @@ exports.getCars = async (req, res) => {
     }
 }
 
+// Getting owner specific cars
 exports.getOwnerCar = async (req,res) => {
     try {
         const ownerId = req.session.userId;

@@ -17,6 +17,8 @@ app.use(express.json());
 app.use(cookieParser());
 const URI = process.env.MONGODB_URI;
 
+app.use("/images", express.static("public/images"));
+
 const store = new mongodbStore({
   uri: URI,
   collection: "sessions",
