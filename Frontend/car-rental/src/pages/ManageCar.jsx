@@ -12,18 +12,20 @@ const ManageCar = () => {
 
   //Fetching all cars from backend
   useEffect(() => {
-    try {
-      const fetchCars = async () => {
+    const fetchOwnerCar = async () => {
+      try {
         const response = await axios.get(
-          `${import.meta.env.VITE_GENERAL_API}/api/getCars`
+          `${import.meta.env.VITE_GENERAL_API}/api/owner/cars`,
+          { withCredentials: true },
         );
-        setCars(response.data);
-        // console.log("Fetched cars:", response.data);
-      };
-      fetchCars();
-    } catch (error) {
-      console.error("Error fetching cars:", error);
-    }
+        console.log(response.data.cars);
+
+        setCars(response.data.cars);
+      } catch (err) {
+        console.log("Error while fetching owner car: ", err);
+      }
+    };
+    fetchOwnerCar();
   }, []);
 
   useEffect(() => {
@@ -38,7 +40,7 @@ const ManageCar = () => {
   const deleteCar = async (carId) => {
     try {
       await axios.delete(
-        `${import.meta.env.VITE_GENERAL_API}/api/deleteCar/${carId}`
+        `${import.meta.env.VITE_GENERAL_API}/api/deleteCar/${carId}`,
       );
       setCars(cars.filter((car) => car._id !== carId));
       navigate("/dashboard/manage-car");
@@ -59,7 +61,10 @@ const ManageCar = () => {
         </p>
       </div>
 
-      <div data-aos="fade-up" className="max-w-6xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div
+        data-aos="fade-up"
+        className="max-w-6xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"
+      >
         {cars.slice(0, 6).map((car) => (
           <Link to={`/car-details/${car._id}`} key={car._id}>
             <div

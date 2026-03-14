@@ -5,25 +5,14 @@ import { Link } from "react-router-dom";
 import "aos/dist/aos.css";
 import AOS from "aos";
 import { AuthContext } from "../context/authContext";
+import Pagination from "../components/Pagination";
+import { CarContext } from "../context/carContext";
 
 const Cars = () => {
-  const [cars, setCars] = useState([]);
-  const {isLoggedIn,userType} = useContext(AuthContext);
-
-  useEffect(() => {
-    try {
-      const fetchCars = async () => {
-        const response = await axios.get(
-          `${import.meta.env.VITE_GENERAL_API}/api/getCars`
-        );
-        setCars(response.data);
-        // console.log("Fetched cars:", response.data);
-      };
-      fetchCars();
-    } catch (error) {
-      console.error("Error fetching cars:", error);
-    }
-  }, []);
+  // const [cars, setCars] = useState([]);
+  const { isLoggedIn, userType } = useContext(AuthContext);
+  const { cars, currentPage, setCurrentPage, totalPages } =
+    useContext(CarContext);
 
   useEffect(() => {
     AOS.init({
@@ -67,7 +56,7 @@ const Cars = () => {
           data-aos-duration="2000"
           className="max-w-6xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"
         >
-          {cars.slice(0, 6).map((car) => (
+          {cars.map((car) => (
             <Link to={`/car-details/${car._id}`} key={car._id}>
               <div
                 key={car._id}
@@ -118,7 +107,11 @@ const Cars = () => {
           ))}
         </div>
       </div>
-
+      <Pagination
+        currentPage={currentPage}
+        setCurrentPage={setCurrentPage}
+        totalPages={totalPages}
+      />
       <Footer></Footer>
     </>
   );

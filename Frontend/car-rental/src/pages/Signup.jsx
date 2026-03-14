@@ -196,7 +196,7 @@ const Signup = () => {
               type="submit"
               disabled={isSubmitting}
               data-aos="fade-up"
-              className="w-full bg-green-600 text-white py-2 rounded-lg hover:bg-green-700 transition disabled:opacity-50"
+              className="w-full bg-green-600 text-white py-2 rounded-lg hover:bg-green-700 transition disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:bg-green-600"
             >
               {isSubmitting ? "Signing up..." : "Signup"}
             </button>
