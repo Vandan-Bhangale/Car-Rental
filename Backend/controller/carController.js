@@ -29,6 +29,24 @@ exports.getCars = async (req, res) => {
     }
 }
 
+// Getting owner specific cars
+exports.getOwnerCar = async (req,res) => {
+    try {
+        const ownerId = req.session.userId;
+
+        if(!ownerId) {
+            return res.status(401).json({message: "Unauthorized"});
+        }
+
+        const cars = await car.find({ownerId});
+
+        res.status(200).json({cars});
+    } catch (err) {
+        console.log('Error while fetching owners car: ',err);
+        return res.status(500).json({message: "Internal server error."});
+    }
+}
+
 exports.getCarsById = async (req, res) => {
     try {
         const carId = req.params.id;
@@ -46,7 +64,8 @@ exports.getCarsById = async (req, res) => {
 
 exports.getCarCount = async (req,res) => {
     try {
-        const count = await car.countDocuments();
+        const ownerId = req.session.userId;
+        const count = await car.countDocuments({ownerId});
         res.status(200).json({ count });
     } catch (error) {
         console.error("Error fetching car count:", error);

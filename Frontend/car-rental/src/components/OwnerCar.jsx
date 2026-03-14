@@ -1,44 +1,30 @@
+import { useEffect, useState } from "react";
+import Footer from "./Footer";
 import axios from "axios";
-import { useContext, useEffect, useState } from "react";
-import Footer from "../components/Footer";
 import { Link } from "react-router-dom";
-import "aos/dist/aos.css";
-import AOS from "aos";
-import { AuthContext } from "../context/authContext";
-import Pagination from "../components/Pagination";
-import { CarContext } from "../context/carContext";
 
-const Cars = () => {
-  // const [cars, setCars] = useState([]);
-  const { isLoggedIn, userType } = useContext(AuthContext);
-  const { cars, currentPage, setCurrentPage, totalPages } =
-    useContext(CarContext);
+function OwnerCar() {
 
-  useEffect(() => {
-    AOS.init({
-      duration: 1000,
-      easing: "ease",
-      once: true,
-    });
-  }, []);
+    const [ownerCar,setOwnerCar] = useState([]);
 
-  let heading = "";
-  let text = "";
+    useEffect(() => {
+        const fetchOwnerCar = async () => {
+            try {
+                const response = await axios.get(`${import.meta.env.VITE_GENERAL_API}/api/owner/cars`,{withCredentials:true});
 
-  if (!isLoggedIn) {
-    heading = "Search Cars";
-    text = "Explore our collection and find your perfect ride.";
-  } else if (userType?.userType === "guest") {
-    heading = "Available Cars";
-    text =
-      "Browse our selection of premium vehicles available for your next adventure.";
-  } else {
-    heading = "My Cars";
-    text = "Track and manage your registered vehicles.";
-  }
+                setOwnerCar(response.data.cars);
+            } catch (err) {
+                console.log('Error while fetching owner car: ',err);
+            }
+        }
+        fetchOwnerCar();
+    },[]);
 
-  return (
-    <>
+    let heading = "";
+    let text = "";
+
+    return (
+        <>
       <div className="px-6 py-10 bg-gray-50 min-h-screen">
         <div className="flex justify-center flex-col items-center mb-10">
           <h1 data-aos="fade-down" className="text-3xl font-bold text-gray-800">
@@ -56,7 +42,7 @@ const Cars = () => {
           data-aos-duration="2000"
           className="max-w-6xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"
         >
-          {cars.map((car) => (
+          {ownerCar.slice(0, 6).map((car) => (
             <Link to={`/car-details/${car._id}`} key={car._id}>
               <div
                 key={car._id}
@@ -107,14 +93,10 @@ const Cars = () => {
           ))}
         </div>
       </div>
-      <Pagination
-        currentPage={currentPage}
-        setCurrentPage={setCurrentPage}
-        totalPages={totalPages}
-      />
+
       <Footer></Footer>
     </>
-  );
-};
+    )
+}
 
-export default Cars;
+export default OwnerCar;

@@ -1,16 +1,18 @@
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Link, useParams, useNavigate } from "react-router-dom";
 import Footer from "../components/Footer";
 import BookingForm from "../components/BookingForm";
 import "aos/dist/aos.css";
 import AOS from "aos";
+import { AuthContext } from "../context/authContext";
 
-const CarDetail = ({ isLoggedIn, userType }) => {
+const CarDetail = () => {
   const { id } = useParams(); // ✅ gets :id from URL
   const [car, setCar] = useState(null);
   const [showBookingForm, setShowBookingForm] = useState(false);
   const navigate = useNavigate();   
+  const {isLoggedIn,userType} = useContext(AuthContext)
 
   useEffect(() => {
     const fetchCar = async () => {

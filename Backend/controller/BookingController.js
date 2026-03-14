@@ -38,10 +38,13 @@ exports.createBooking = async (req, res) => {
     if (days < 1) days = 1; // Minimum one day booking
     const totalAmount = days * ratePerDay;
 
+    const ownerId = car.ownerId.toString();    //* Storing the ownerId in booking to know the owner
+
     const booking = new BookingModel({
       userId: req.session.userId,
       name,
       carId,
+      ownerId,
       startDate: formattedStart,
       endDate: formattedEnd,
       location,
@@ -58,7 +61,7 @@ exports.createBooking = async (req, res) => {
   }
 };
 
-//Remaining this functionality to be tested
+//* Fetching user booking data for user
 exports.getUserBookings = async (req, res) => {
   try {
     const today = new Date();
@@ -102,7 +105,8 @@ exports.cancelBooking = async (req, res) => {
 
 exports.getBookingCount = async (req, res) => {
   try {
-    const bookingCount = await BookingModel.countDocuments();
+    const ownerId = req.session.userId;
+    const bookingCount = await BookingModel.countDocuments({ownerId});
     res.status(200).json({ count: bookingCount });
   } catch (error) {
     console.log("Error fetching booking count:", error);
@@ -112,7 +116,11 @@ exports.getBookingCount = async (req, res) => {
 
 exports.getTotalRevenue = async (req, res) => {
   try {
+    const ownerId = req.session.userId;
     const result = await BookingModel.aggregate([
+      {
+        $match:{ownerId}
+      },
       {
         $group: {
           _id: null,
@@ -124,6 +132,8 @@ exports.getTotalRevenue = async (req, res) => {
     const revenue = (await result[0]?.totalRevenue) || 0;
     res.status(200).json({ revenue });
   } catch (error) {
+    console.log('Error while getting total Revenue: ',error);
+    
     res.status(400).json({ message: "Server error", error });
   }
 };

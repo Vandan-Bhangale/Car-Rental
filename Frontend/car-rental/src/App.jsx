@@ -1,4 +1,3 @@
-import { useState } from "react";
 import "./App.css";
 import NavBar from "./components/NavBar";
 import {
@@ -7,11 +6,11 @@ import {
   BrowserRouter as Router,
   Navigate,
 } from "react-router-dom";
+
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import { ToastContainer } from "react-toastify";
-import { useEffect } from "react";
 import AddCar from "./pages/AddCar";
 import Cars from "./pages/Cars";
 import CarDetail from "./pages/CarDetail";
@@ -26,81 +25,37 @@ import BookingDetails from "./pages/BookingDetails";
 import About from "./pages/About";
 import Success from "./pages/Success";
 import Cancel from "./pages/Cancel";
+import OwnerCar from "./components/OwnerCar";
 
 function App() {
-  const [user, setUser] = useState(null);
-  const [userType, setUserType] = useState(null);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-
-  useEffect(() => {
-    const storedUser = localStorage.getItem("user");
-    if (storedUser) {
-      setUserType(JSON.parse(storedUser));
-    }
-  }, []);
-
-  useEffect(() => {
-    const checkAuthStatus = async () => {
-      try {
-        const response = await fetch(
-          `${import.meta.env.VITE_GENERAL_API}/api/status`,
-          {
-            method: "GET",
-            credentials: "include",
-          }
-        );
-        const data = await response.json();
-        setIsLoggedIn(data.isLoggedIn);
-        setUser(data.user); //This is for user information if we want user specific info like name
-      } catch (error) {
-        console.error("Error checking auth status:", error);
-      }
-    };
-    checkAuthStatus();
-  }, []);
-
   return (
     <>
       <Router>
-        <NavBar
-          isLoggedIn={isLoggedIn}
-          setIsLoggedIn={setIsLoggedIn}
-          userType={userType}
-          setUserType={setUserType}
-        ></NavBar>
-        <ToastContainer></ToastContainer>
+        <NavBar />
+
+        <ToastContainer />
+
         <Routes>
-          <Route
-            path="/"
-            element={<Home userType={userType} isLoggedIn={isLoggedIn}></Home>}
-          />
+          <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Signup />} />
           <Route path="/add-car" element={<AddCar />} />
           <Route path="/success" element={<Success />} />
           <Route path="/cancel" element={<Cancel />} />
-          <Route
-            path="/cars"
-            element={<Cars userType={userType} isLoggedIn={isLoggedIn} />}
-          />
+
+          <Route path="/cars" element={<Cars />} />
           <Route path="/about" element={<About />} />
-          <Route
-            path="/car-details/:id"
-            element={<CarDetail isLoggedIn={isLoggedIn} userType={userType} />}
-          />
+
+          <Route path="/car-details/:id" element={<CarDetail />} />
+
           <Route path="/my-bookings" element={<MyBookings />} />
           <Route path="/payment" element={<Payment />} />
           <Route path="/onlinePayment" element={<OnlinePayment />} />
+
           <Route path="/dashboard" element={<DashBoardLayout />}>
             <Route index element={<Navigate to="/dashboard/dashboard" />} />
-            <Route
-              path="cars"
-              element={
-                <Cars userType={userType} isLoggedIn={isLoggedIn}>
-                  {" "}
-                </Cars>
-              }
-            />
+
+            <Route path="cars" element={<OwnerCar />} />
             <Route path="my-bookings" element={<MyBookings />} />
             <Route path="dashboard" element={<Dashboard />} />
             <Route path="edit-car/:id" element={<EditCar />} />

@@ -8,6 +8,7 @@ const mongodbStore = require("connect-mongodb-session")(session);
 const userRoutes = require("./Routes/userRoute");
 const carRoutes = require("./Routes/CarRoutes");
 const BoookingRoutes = require("./Routes/BookingRoutes");
+const authRoutes = require("./Routes/authRoutes");
 
 const app = express();
 
@@ -15,6 +16,8 @@ app.use(cors({ origin: process.env.CORS_ORIGIN, credentials: true }));
 app.use(express.json());
 app.use(cookieParser());
 const URI = process.env.MONGODB_URI;
+
+app.use("/images", express.static("public/images"));
 
 const store = new mongodbStore({
   uri: URI,
@@ -52,6 +55,7 @@ app.use(session({
   store
 }));
 
+app.use("/api",authRoutes)
 app.use("/api", userRoutes);
 app.use("/api", carRoutes);
 app.use("/api", BoookingRoutes);

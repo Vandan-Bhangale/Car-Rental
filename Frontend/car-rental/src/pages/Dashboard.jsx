@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import "aos/dist/aos.css";
 import AOS from "aos";
+import axios from "axios";
 
 const Dashboard = () => {
   const [carCount, setCarCount] = useState(0);
@@ -9,30 +10,46 @@ const Dashboard = () => {
 
   // Fetch car count from backend
   useEffect(() => {
-    fetch(`${import.meta.env.VITE_GENERAL_API}/api/carCount`)
-      .then((response) => response.json())
-      .then((data) => {
-        setCarCount(data.count);
-      });
-  }, []);
+    const getCarCount = async () => {
+      try {
+        const response = await axios.get(`${import.meta.env.VITE_GENERAL_API}/api/carCount`,{withCredentials:true});
+        console.log(response.data.count);
+        
+        setCarCount(response.data.count);
+      } catch (err) {
+        console.log('Error while gettnig car count: ',err);
+      }
+    }
+    getCarCount();
+  },[])
 
   // Fetch booking count from backend
   useEffect(() => {
-    fetch(`${import.meta.env.VITE_GENERAL_API}/api/bookingCount`)
-      .then((response) => response.json())
-      .then((data) => {
-        setBookingCount(data.count);
-      });
-  }, []);
+    const getBookingCount = async () => {
+      try {
+        const response = await axios.get(`${import.meta.env.VITE_GENERAL_API}/api/bookingCount`,{withCredentials:true});
+
+        setBookingCount(response.data.count)
+      } catch (err) {
+        console.log('Error while fetching booking count: ',err);
+      }
+    }
+    getBookingCount();
+  },[])
 
   // Fetch total revenue from backend
   useEffect(() => {
-    fetch(`${import.meta.env.VITE_GENERAL_API}/api/totalRevenue`)
-      .then((response) => response.json())
-      .then((data) => {
-        setTotalRevenue(data.revenue);
-      });
-  }, []);
+    const getTotalRevenue = async () => {
+      try {
+        const response = await axios.get(`${import.meta.env.VITE_GENERAL_API}/api/totalRevenue`,{withCredentials:true});
+
+        setTotalRevenue(response.data.revenue);
+      } catch (err) {
+        console.log('Error while fetching total revenue: ',err);
+      }
+    }
+    getTotalRevenue();
+  },[])
 
   useEffect(() => {
     AOS.init({
