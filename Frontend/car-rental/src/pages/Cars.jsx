@@ -11,7 +11,7 @@ import { CarContext } from "../context/carContext";
 const Cars = () => {
   // const [cars, setCars] = useState([]);
   const { isLoggedIn, userType } = useContext(AuthContext);
-  const { cars, currentPage, setCurrentPage, totalPages } =
+  const { cars, currentPage, setCurrentPage, totalPages, loading } =
     useContext(CarContext);
 
   useEffect(() => {
@@ -50,62 +50,73 @@ const Cars = () => {
         </div>
 
         {/* Car Listing */}
+        {loading ? (
+          <div className="text-center py-10">
+            <span className="loading loading-spinner text-info"></span>
+            <p className="mt-2 text-gray-600">Loading featured cars...</p>
+          </div>
+        ) : (
+          <>
+            <div
+              data-aos="fade-up"
+              data-aos-duration="2000"
+              className="max-w-6xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"
+            >
+              {cars.map((car) => (
+                <Link to={`/car-details/${car._id}`} key={car._id}>
+                  <div
+                    key={car._id}
+                    className="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-all duration-300"
+                  >
+                    {/* Car Image */}
+                    {car.image && (
+                      <img
+                        className="w-full h-40 object-cover"
+                        src={car.image} // 👈 use directly
+                        alt={car.Brand}
+                        loading="lazy"
+                      />
+                    )}
 
-        <div
-          data-aos="fade-up"
-          data-aos-duration="2000"
-          className="max-w-6xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"
-        >
-          {cars.map((car) => (
-            <Link to={`/car-details/${car._id}`} key={car._id}>
-              <div
-                key={car._id}
-                className="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-all duration-300"
-              >
-                {/* Car Image */}
-                {car.image && (
-                  <img
-                    className="w-full h-40 object-cover"
-                    src={car.image} // 👈 use directly
-                    alt={car.Brand}
-                  />
-                )}
+                    {/* Car Details */}
+                    <div className="p-4">
+                      {/* Brand & Model */}
+                      <div className="space-y-1">
+                        <h2 className="text-lg font-semibold text-gray-800">
+                          {car.Brand}
+                        </h2>
+                        <p className="text-gray-500 text-sm">{car.Model}</p>
+                      </div>
 
-                {/* Car Details */}
-                <div className="p-4">
-                  {/* Brand & Model */}
-                  <div className="space-y-1">
-                    <h2 className="text-lg font-semibold text-gray-800">
-                      {car.Brand}
-                    </h2>
-                    <p className="text-gray-500 text-sm">{car.Model}</p>
+                      {/* Badges */}
+                      <div className="flex flex-wrap gap-2 mt-3">
+                        <span className="bg-gray-200 px-2 py-0.5 rounded-full text-xs">
+                          {car.SeatingCapacity} Seats
+                        </span>
+                        <span className="bg-indigo-100 text-indigo-700 px-2 py-0.5 rounded-full text-xs">
+                          {car.Transmission}
+                        </span>
+                        <span className="bg-green-100 text-green-700 px-2 py-0.5 rounded-full text-xs">
+                          {car.FuelType}
+                        </span>
+                      </div>
+
+                      {/* Location */}
+                      <p className="text-gray-600 text-sm mt-2">
+                        {car.Location}
+                      </p>
+
+                      {/* Price */}
+                      <p className="text-base font-bold text-indigo-600 mt-1">
+                        ₹{car.DailyPrice} / day
+                      </p>
+                    </div>
                   </div>
-
-                  {/* Badges */}
-                  <div className="flex flex-wrap gap-2 mt-3">
-                    <span className="bg-gray-200 px-2 py-0.5 rounded-full text-xs">
-                      {car.SeatingCapacity} Seats
-                    </span>
-                    <span className="bg-indigo-100 text-indigo-700 px-2 py-0.5 rounded-full text-xs">
-                      {car.Transmission}
-                    </span>
-                    <span className="bg-green-100 text-green-700 px-2 py-0.5 rounded-full text-xs">
-                      {car.FuelType}
-                    </span>
-                  </div>
-
-                  {/* Location */}
-                  <p className="text-gray-600 text-sm mt-2">{car.Location}</p>
-
-                  {/* Price */}
-                  <p className="text-base font-bold text-indigo-600 mt-1">
-                    ₹{car.DailyPrice} / day
-                  </p>
-                </div>
-              </div>
-            </Link>
-          ))}
-        </div>
+                </Link>
+              ))}
+            </div>
+          </>
+        )}
       </div>
       <Pagination
         currentPage={currentPage}

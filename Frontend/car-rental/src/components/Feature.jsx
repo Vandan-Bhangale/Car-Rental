@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import "aos/dist/aos.css";
 import AOS from "aos";
+import Spinner from "./Spinner";
 
 const Featured = () => {
   const [cars, setCars] = useState([]);
@@ -49,10 +50,7 @@ const Featured = () => {
 
         {/* Car Listing */}
         {loading ? (
-          <div className="text-center py-10">
-            <div className="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-indigo-600"></div>
-            <p className="mt-2 text-gray-600">Loading featured cars...</p>
-          </div>
+          <Spinner></Spinner>
         ) : (
           <>
             <div
