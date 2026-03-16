@@ -1,3 +1,4 @@
+import { lazy, Suspense } from "react";
 import "./App.css";
 import NavBar from "./components/NavBar";
 import {
@@ -12,7 +13,7 @@ import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import { ToastContainer } from "react-toastify";
 import AddCar from "./pages/AddCar";
-import Cars from "./pages/Cars";
+const Cars = lazy(() => import("./pages/Cars"));
 import CarDetail from "./pages/CarDetail";
 import MyBookings from "./pages/MyBookings";
 import Payment from "./components/Payment";
@@ -26,6 +27,7 @@ import About from "./pages/About";
 import Success from "./pages/Success";
 import Cancel from "./pages/Cancel";
 import OwnerCar from "./components/OwnerCar";
+import Spinner from "./components/Spinner";
 
 function App() {
   return (
@@ -43,7 +45,14 @@ function App() {
           <Route path="/success" element={<Success />} />
           <Route path="/cancel" element={<Cancel />} />
 
-          <Route path="/cars" element={<Cars />} />
+          <Route
+            path="/cars"
+            element={
+              <Suspense fallback={<Spinner />}>
+                <Cars />
+              </Suspense>
+            }
+          />
           <Route path="/about" element={<About />} />
 
           <Route path="/car-details/:id" element={<CarDetail />} />

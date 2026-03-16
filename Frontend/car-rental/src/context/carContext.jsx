@@ -7,6 +7,7 @@ export const CarProvider = ({ children }) => {
   const [cars, setCars] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [postPerPage, setPostPerPage] = useState(6);
+  const [loading,setLoading] = useState(true);
 
   useEffect(() => {
     try {
@@ -20,6 +21,8 @@ export const CarProvider = ({ children }) => {
       fetchCars();
     } catch (error) {
       console.error("Error fetching cars:", error);
+    } finally {
+      setLoading(false);
     }
   }, []);
 
@@ -37,6 +40,7 @@ export const CarProvider = ({ children }) => {
         currentPage,
         setCurrentPage,
         totalPages,
+        loading
       }}
     >
       {children}
