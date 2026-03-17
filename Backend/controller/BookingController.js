@@ -3,7 +3,8 @@ const CarModel = require("../Models/CarModel");
 const mongoose = require("mongoose");
 const Stripe = require("stripe");
 require("dotenv").config();
-
+const sendMail = require("../utils/sendMail");
+const User = require("../Models/userModel");
 const stripe = new Stripe(process.env.STRIPE_API);
 
 exports.createBooking = async (req, res) => {
@@ -18,12 +19,17 @@ exports.createBooking = async (req, res) => {
       paymentStatus,
       bookingStatus,
     } = req.body;
+    const userId = req.session.userId;
+    const user = await User.findById(userId);
+    console.log("User Id: ", user.email);
 
     if (!mongoose.Types.ObjectId.isValid(carId)) {
       return res.status(400).json({ message: "Invalid car ID format." });
     }
 
-    const car = await CarModel.findById(carId); //Getting car document from carID
+    const car = await CarModel.findById(carId).populate("ownerId"); //Getting car document from carID
+    //* Used populate for car object because carId just give Id and populate generates whole car object
+    
     if (!car) {
       return res.status(400).json({ message: "Car not found." });
     }
@@ -38,7 +44,8 @@ exports.createBooking = async (req, res) => {
     if (days < 1) days = 1; // Minimum one day booking
     const totalAmount = days * ratePerDay;
 
-    const ownerId = car.ownerId.toString();    //* Storing the ownerId in booking to know the owner
+    const ownerId = car.ownerId; //* Storing the ownerId in booking to know the owner
+    console.log("owner email: ", ownerId.email);
 
     const booking = new BookingModel({
       userId: req.session.userId,
@@ -55,8 +62,26 @@ exports.createBooking = async (req, res) => {
     });
 
     await booking.save();
+
+
+    //TODO: Sending mail functionality is disabled for developement and testing
+    // await sendMail(
+    //   user.email,
+    //   "Booking confirmation",
+    //   `Your booking for car ${car.name} has been confirmed.`,
+    // );
+
+    // await sendMail(
+    //   ownerId.email,
+    //   "Booking confirmation",
+    //   `You have booking for car ${car.name} from user ${user.name} for the date ${formattedStart} to ${formattedEnd}.`,
+    // );
+    console.log("Mail send successfully");
+
     res.status(201).json({ message: "Booking created successfully", booking });
   } catch (error) {
+    console.log("Error while booking car: ", error);
+
     res.status(500).json({ message: "Server error", error });
   }
 };
@@ -84,7 +109,7 @@ exports.cancelBooking = async (req, res) => {
     console.log(
       "Cancel Booking Request Body:",
       req.session.userId,
-      req.params.bookingId
+      req.params.bookingId,
     );
     const cancelBooking = await BookingModel.findOneAndDelete({
       _id: req.params.bookingId,
@@ -106,7 +131,7 @@ exports.cancelBooking = async (req, res) => {
 exports.getBookingCount = async (req, res) => {
   try {
     const ownerId = req.session.userId;
-    const bookingCount = await BookingModel.countDocuments({ownerId});
+    const bookingCount = await BookingModel.countDocuments({ ownerId });
     res.status(200).json({ count: bookingCount });
   } catch (error) {
     console.log("Error fetching booking count:", error);
@@ -119,7 +144,7 @@ exports.getTotalRevenue = async (req, res) => {
     const ownerId = req.session.userId;
     const result = await BookingModel.aggregate([
       {
-        $match:{ownerId}
+        $match: { ownerId },
       },
       {
         $group: {
@@ -132,8 +157,8 @@ exports.getTotalRevenue = async (req, res) => {
     const revenue = (await result[0]?.totalRevenue) || 0;
     res.status(200).json({ revenue });
   } catch (error) {
-    console.log('Error while getting total Revenue: ',error);
-    
+    console.log("Error while getting total Revenue: ", error);
+
     res.status(400).json({ message: "Server error", error });
   }
 };
