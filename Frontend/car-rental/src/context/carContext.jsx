@@ -7,7 +7,8 @@ export const CarProvider = ({ children }) => {
   const [cars, setCars] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [postPerPage, setPostPerPage] = useState(6);
-  const [loading,setLoading] = useState(true);
+  const [loading, setLoading] = useState(true);
+  const [searchTerm, setSearchTerm] = useState("");
 
   useEffect(() => {
     try {
@@ -26,12 +27,22 @@ export const CarProvider = ({ children }) => {
     }
   }, []);
 
+  const filteredCars = cars.filter((car) => {
+    const text = searchTerm.toLowerCase();
+
+    return (
+      car.Brand.toLowerCase().includes(text) ||
+      car.Model.toLowerCase().includes(text)
+    );
+  });
+
   // pagination logic
   const indexOfLastCar = currentPage * postPerPage;
   const indexOfFirstCar = indexOfLastCar - postPerPage;
-  const currentCars = cars.slice(indexOfFirstCar, indexOfLastCar);
 
-  const totalPages = Math.ceil(cars.length / postPerPage);
+  const currentCars = filteredCars.slice(indexOfFirstCar, indexOfLastCar);
+
+  const totalPages = Math.ceil(filteredCars.length / postPerPage);
 
   return (
     <CarContext.Provider
@@ -40,7 +51,9 @@ export const CarProvider = ({ children }) => {
         currentPage,
         setCurrentPage,
         totalPages,
-        loading
+        loading,
+        searchTerm,
+        setSearchTerm,
       }}
     >
       {children}

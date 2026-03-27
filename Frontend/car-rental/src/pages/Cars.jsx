@@ -7,12 +7,12 @@ import AOS from "aos";
 import { AuthContext } from "../context/authContext";
 import Pagination from "../components/Pagination";
 import { CarContext } from "../context/carContext";
+import SearchBar from "../components/SearchBar";
 
 const Cars = () => {
   // const [cars, setCars] = useState([]);
   const { isLoggedIn, userType } = useContext(AuthContext);
-  const { cars, currentPage, setCurrentPage, totalPages, loading } =
-    useContext(CarContext);
+  const { cars, currentPage, setCurrentPage, totalPages, loading } = useContext(CarContext);
 
   useEffect(() => {
     AOS.init({
@@ -48,6 +48,8 @@ const Cars = () => {
             {text}
           </p>
         </div>
+
+        <SearchBar></SearchBar>
 
         {/* Car Listing */}
         {loading ? (

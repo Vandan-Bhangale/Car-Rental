@@ -61,8 +61,9 @@ exports.createBooking = async (req, res) => {
       bookingStatus,
     });
 
+    car.Availability = false;
+    await car.save();
     await booking.save();
-
 
     //TODO: Sending mail functionality is disabled for developement and testing
     // await sendMail(
@@ -104,25 +105,29 @@ exports.getUserBookings = async (req, res) => {
   }
 };
 
+//* Booking cancellation logic
 exports.cancelBooking = async (req, res) => {
   try {
-    console.log(
-      "Cancel Booking Request Body:",
-      req.session.userId,
-      req.params.bookingId,
-    );
-    const cancelBooking = await BookingModel.findOneAndDelete({
+    const booking = await BookingModel.findOne({
       _id: req.params.bookingId,
       userId: req.session.userId,
-    });
-
-    if (!cancelBooking) {
+    }).populate("carId");
+    
+    if (!booking) {
       return res.status(404).json({
-        message:
-          "Booking not found or you are not authorized to cancel this booking.",
+        message: "Booking not found or unauthorized",
       });
     }
+
+    // update car availability
+    booking.carId.Availability = true;
+    await booking.carId.save();
+
+    // now delete booking
+    await BookingModel.findByIdAndDelete(req.params.bookingId);
+
     res.status(200).json({ message: "Booking cancelled successfully." });
+
   } catch (error) {
     res.status(500).json({ message: "Server error", error });
   }

@@ -2,15 +2,15 @@ const { model } = require('mongoose');
 const nodemailer = require('nodemailer');
 require('dotenv').config();
 
-const sendMail = async (to,subject,text) => {
+const sendMail = async (to,subject,text) => {      
     try {
         const transporter = nodemailer.createTransport({
             secure:true,
             host: 'smtp.gmail.com',
             port: 465,
             auth: {
-                user: process.env.MYEMAIL,
-                pass: process.env.MYPASSWORD
+                user: process.env.MYEMAIL,          //* My email account from which mail will be send
+                pass: process.env.MYPASSWORD        //* App password created from mail account
             }
         })
 
@@ -31,4 +31,4 @@ const sendMail = async (to,subject,text) => {
     }
 }
 
-module.exports = sendMail;
+module.exports = sendMail; 
