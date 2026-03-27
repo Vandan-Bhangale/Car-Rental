@@ -12,6 +12,7 @@ const CarSchema = mongoose.Schema({
     SeatingCapacity: { type: Number, required: true, min: 1, max: 7 },
     Location: { type: String, required: true },
     Description: { type: String, required: true },
+    Availability: {type: Boolean, default:true,required:true},
     ownerId: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User',

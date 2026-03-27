@@ -1,8 +1,11 @@
 const mongoose = require("mongoose");
 const carModel = require("../Models/CarModel");
-require("dotenv").config();
+require("dotenv").config({
+  path: require("path").resolve(__dirname, "../.env")
+});
 
 const mongodbURI = process.env.MONGODB_URI;
+console.log('MongoDB URL: ',mongodbURI);
 
 mongoose.connect(mongodbURI)
 .then(() => console.log('Connected to mongodb'))
@@ -62,6 +65,7 @@ for(let i = 0;i < 50;i++) {
         SeatingCapacity: car.Category==="SUV"?7:5,
         Location: locations[Math.floor(Math.random()*locations.length)],
         Description: `Well maintained ${car.Brand} ${car.Model} available for rent.`,
+        Availability:true,
         ownerId: owner,
         image: images[Math.floor(Math.random() * images.length)]
     })
