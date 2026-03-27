@@ -12,7 +12,8 @@ import SearchBar from "../components/SearchBar";
 const Cars = () => {
   // const [cars, setCars] = useState([]);
   const { isLoggedIn, userType } = useContext(AuthContext);
-  const { cars, currentPage, setCurrentPage, totalPages, loading } = useContext(CarContext);
+  const { cars, currentPage, setCurrentPage, totalPages, loading } =
+    useContext(CarContext);
 
   useEffect(() => {
     AOS.init({
@@ -68,8 +69,20 @@ const Cars = () => {
                 <Link to={`/car-details/${car._id}`} key={car._id}>
                   <div
                     key={car._id}
-                    className="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-all duration-300"
+                    className="relative bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-all duration-300"
                   >
+                    {/* Availability Badge */}
+                    <div className="absolute top-2 left-2 z-10">
+                      {car.Availability ? (
+                        <span className="bg-green-500 text-white text-xs px-3 py-1 rounded-full shadow">
+                          Available
+                        </span>
+                      ) : (
+                        <span className="bg-red-500 text-white text-xs px-3 py-1 rounded-full shadow">
+                          Not Available
+                        </span>
+                      )}
+                    </div>
                     {/* Car Image */}
                     {car.image && (
                       <img
