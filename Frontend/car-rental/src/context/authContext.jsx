@@ -26,6 +26,7 @@ export const AuthProvider = ({ children }) => {
           },
         );
         const data = await response.json();
+        // console.log(data);
         setIsLoggedIn(data.isLoggedIn);
         setUser(data.user); //This is for user information if we want user specific info like name
       } catch (error) {
@@ -35,20 +36,20 @@ export const AuthProvider = ({ children }) => {
     checkAuthStatus();
   }, []);
 
-  const Logout = async () => {
-    try {
-      const response = axios.get(
-        `${import.meta.env.VITE_GENERAL_API}/api/logout`,
-        { withCredentials: true },
-      );
-      setUser(null);
-    } catch (err) {
-      console.log("Error while logging out the user: ", err);
-    }
-  };
+  // const Logout = async () => {
+  //   try {
+  //     const response = axios.get(
+  //       `${import.meta.env.VITE_GENERAL_API}/api/logout`,
+  //       { withCredentials: true },
+  //     );
+  //     setUser(null);
+  //   } catch (err) {
+  //     console.log("Error while logging out the user: ", err);
+  //   }
+  // };
 
   return (
-    <AuthContext.Provider value={{ user, isLoggedIn, setUser, Logout, userType, setUserType,setIsLoggedIn }}>
+    <AuthContext.Provider value={{ user, isLoggedIn, setUser, userType, setUserType,setIsLoggedIn }}>
       {children}
     </AuthContext.Provider>
   );

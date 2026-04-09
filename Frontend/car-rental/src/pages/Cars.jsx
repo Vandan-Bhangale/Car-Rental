@@ -8,6 +8,7 @@ import { AuthContext } from "../context/authContext";
 import Pagination from "../components/Pagination";
 import { CarContext } from "../context/carContext";
 import SearchBar from "../components/SearchBar";
+import NoCars from "../components/NoCar";
 
 const Cars = () => {
   // const [cars, setCars] = useState([]);
@@ -53,6 +54,8 @@ const Cars = () => {
         <SearchBar></SearchBar>
 
         {/* Car Listing */}
+        {cars.length === 0 && <NoCars></NoCars>}  
+
         {loading ? (
           <div className="text-center py-10">
             <span className="loading loading-spinner text-info"></span>

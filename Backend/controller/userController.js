@@ -9,7 +9,8 @@ exports.getProfile = async (req,res) => {
         if(user) {
             res.status(200).json({
                 name: user.name,
-                email: user.email
+                email: user.email,
+                authProvider:user.authProvider
             })
         } else {
            return res.status(400).json({message: "User data not found"});
@@ -53,5 +54,36 @@ exports.deleteProfile = async (req,res) => {
         res.status(200).json({message: "Profile deleted sucssfully"});
     } catch (err) {
         return res.status(500).json({message:"Server error",err});
+    }
+}
+
+exports.switchRole = async (req,res) => {
+    try {
+        const userId = req.session.userId;
+
+        const user = await User.findById(userId);
+        if(!user) {
+            return res.status(400).json({message:"User not found"});
+        }
+
+        if(user.authProvider !== "google") {
+            return res.status(400).json({message:"Only for google auth user"});
+        }
+
+        user.userType = "owner";
+        await user.save();
+
+        req.session.user.userType = "owner";
+
+        res.status(200).json({message:"Role switched successfully",success:true,user: {
+          id: user._id.toString(),
+          name: user.name,
+          email: user.email,
+          userType: user.userType,
+        }});
+
+    } catch (err) {
+        console.log('Error while role switching: ',err);
+        return res.status(500).json({message:"Internal server error"});
     }
 }

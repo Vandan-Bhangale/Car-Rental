@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import 'aos/dist/aos.css';
 import AOS from "aos"
 import { useEffect } from "react";
+import { GoogleLogin } from "@react-oauth/google";
 
 const Signup = () => {
   const navigate = useNavigate();
@@ -24,6 +25,34 @@ const Signup = () => {
       .required("Confirm Password is required"),
   });
 
+  const handleGoogleSuccess = async (credentialResponse) => {
+  try {
+    const token = credentialResponse.credential;
+
+    const response = await axios.post(
+      `${import.meta.env.VITE_GENERAL_API}/api/google`,
+      { token },
+      { withCredentials: true }
+    );
+
+    if (response.data.message === "Login successful") {
+      toast.success("Login Successful");
+
+      console.log(response.data);
+
+      // ✅ SAME as normal login
+      localStorage.setItem("user", JSON.stringify(response.data.user));
+
+      navigate("/");
+      window.location.reload(); // optional but you used it already
+    } else {
+      toast.error("Google login failed.");
+    }
+  } catch (error) {
+    console.error("Google Login Error:", error);
+    toast.error("An error occurred during Google Login.");
+  }
+};
   const handleSubmit = async (values, { setSubmitting, resetForm }) => {
     try {
       const response = await axios.post(
@@ -200,6 +229,16 @@ const Signup = () => {
             >
               {isSubmitting ? "Signing up..." : "Signup"}
             </button>
+
+            <p className="text-black text-center">Or</p>
+            <div className="flex justify-center">
+              <GoogleLogin
+                onSuccess={handleGoogleSuccess}
+                onError={() => {
+                  toast.error("Google Login Failed");
+                }}
+              />
+            </div>
 
             <p data-aos="fade-up" className="mt-4 text-sm text-center">
               Already have an account?{" "}

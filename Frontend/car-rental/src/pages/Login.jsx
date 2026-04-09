@@ -6,6 +6,7 @@ import { toast } from "react-toastify";
 import "aos/dist/aos.css";
 import AOS from "aos";
 import { useEffect, useState } from "react";
+import { GoogleLogin } from "@react-oauth/google";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -19,6 +20,35 @@ const Login = () => {
       .min(6, "Password must be at least 6 characters")
       .required("Password is required"),
   });
+
+   const handleGoogleSuccess = async (credentialResponse) => {
+  try {
+    const token = credentialResponse.credential;
+
+    const response = await axios.post(
+      `${import.meta.env.VITE_GENERAL_API}/api/google`,
+      { token },
+      { withCredentials: true }
+    );
+
+    if (response.data.message === "Login successful") {
+      toast.success("Login Successful");
+
+      console.log(response.data);
+
+      // ✅ SAME as normal login
+      localStorage.setItem("user", JSON.stringify(response.data.user));
+
+      navigate("/");
+      window.location.reload(); // optional but you used it already
+    } else {
+      toast.error("Google login failed.");
+    }
+  } catch (error) {
+    console.error("Google Login Error:", error);
+    toast.error("An error occurred during Google Login.");
+  }
+};
 
   const handleSubmit = async (values, { setSubmitting }) => {
     //setSubmitting is formik inbuilt function
@@ -123,6 +153,16 @@ const Login = () => {
             >
               {isSubmitting ? "Logging in..." : "Login"}
             </button>
+
+            <p className="text-black text-center">Or</p>
+            <div className="flex justify-center">
+              <GoogleLogin
+                onSuccess={handleGoogleSuccess}
+                onError={() => {
+                  toast.error("Google Login Failed");
+                }}
+              />
+            </div>
 
             <p data-aos="fade-up" className="mt-4 text-sm text-center">
               Don't have an account?{" "}

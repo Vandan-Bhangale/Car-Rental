@@ -28,15 +28,15 @@ import Success from "./pages/Success";
 import Cancel from "./pages/Cancel";
 import OwnerCar from "./components/OwnerCar";
 import Spinner from "./components/Spinner";
+import { GoogleOAuthProvider } from "@react-oauth/google";
 
 function App() {
   return (
     <>
+    <GoogleOAuthProvider clientId="523578936900-3uenacoo1rb7l32t7meetata0lso9dfp.apps.googleusercontent.com">
       <Router>
         <NavBar />
-
         <ToastContainer />
-
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
@@ -73,6 +73,7 @@ function App() {
           </Route>
         </Routes>
       </Router>
+      </GoogleOAuthProvider>
     </>
   );
 }
