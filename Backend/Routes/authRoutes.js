@@ -6,5 +6,7 @@ Router.post('/register', authController.postSignup);
 Router.post('/login', authController.postLogin);
 Router.get('/status', authController.getStatus);
 Router.post('/logout', authController.postLogout);
+Router.post("/google",authController.googleLogin);
+
 
 module.exports = Router;
