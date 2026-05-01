@@ -66,17 +66,17 @@ exports.createBooking = async (req, res) => {
     await booking.save();
 
     //TODO: Sending mail functionality is disabled for developement and testing
-    // await sendMail(
-    //   user.email,
-    //   "Booking confirmation",
-    //   `Your booking for car ${car.name} has been confirmed.`,
-    // );
+    await sendMail(
+      user.email,
+      "Booking confirmation",
+      `Your booking for car ${car.name} has been confirmed.`,
+    );
 
-    // await sendMail(
-    //   ownerId.email,
-    //   "Booking confirmation",
-    //   `You have booking for car ${car.name} from user ${user.name} for the date ${formattedStart} to ${formattedEnd}.`,
-    // );
+    await sendMail(
+      ownerId.email,
+      "Booking confirmation",
+      `You have booking for car ${car.name} from user ${user.name} for the date ${formattedStart} to ${formattedEnd}.`,
+    );
     console.log("Mail send successfully");
 
     res.status(201).json({ message: "Booking created successfully", booking });
