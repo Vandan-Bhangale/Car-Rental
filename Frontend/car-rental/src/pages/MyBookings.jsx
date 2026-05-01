@@ -100,9 +100,9 @@ const MyBookings = () => {
                   <li className="relative before:content-['•'] before:mr-1 text-m before:text-black uppercase">
                     {booking.carId?.Category}
                   </li>
-                  <li className="relative before:content-['•'] before:mr-1 text-m before:text-black">
+                  {/* <li className="relative before:content-['•'] before:mr-1 text-m before:text-black">
                     {booking.carId?.Location}
-                  </li>
+                  </li> */}
                 </ul>
               </div>
 
